@@ -1,9 +1,9 @@
 ########
 # Bugs #
 ########
-- Notifications still working even when set to turn off in settings (for example gmail notifys) (TJ - ib4stid@gmail.com)
-- WIFI not being turned off (Anthony Mauro <mrtennis924@gmail.com>, Jimar Suurmeijer <j.suurmeijer@gmail.com>)
-[DONE]- Bluetooth not working on all devices (Anthony Mauro <mrtennis924@gmail.com>)
+- Notifications still working even when set to turn off in settings (for example gmail notifys) (TJ)
+- WIFI not being turned off (Anthony Mauro <mrtennis924@gmail.com>, Jimar Suurmeijer)
+[DONE]- Bluetooth not working on all devices (Anthony Mauro)
 [DONE]-- Ab Android 2.0: http://marakana.com/forums/android/android_examples/50.html
 [DONE]--- http://developer.android.com/reference/android/bluetooth/BluetoothAdapter.html
 [DONE]- Expection when music player set, that does not exist (See automatic bug report)
@@ -11,44 +11,44 @@
 ############
 # Features #
 ############
-- Stop synchronization (Christoph Radde <christoph.radde@googlemail.com>)
+- Stop synchronization (Christoph Radde)
 - Shake extend after turned off volume (wait 20 seconds with turning off app)
-- Allow continuous shake extend [optional], recommended only while phone is charging due to battery use (Mitch Loo <loomitch@gmail.com>)
+- Allow continuous shake extend [optional], recommended only while phone is charging due to battery use (Mitch Loo)
 - show somewhere which unsupported application(s) are currently selected (Matt Ots)
 - One Screen for Info (with Information on how to use, Supported Players, ChangeLog, Donate)
 - Send pause from headset?? Maybe will work to stop some players nicely?
-- Lock Wifi (Morten Haugen <morten@mortenhaugen.com>)
+- Lock Wifi (Morten Haugen)
 -- thank you for your excellent app,  and great support. Is it possible to add an option to have the wifi locked when SleepTimer starts, just like the WiFi Lock app does?
-- Allow the user to have a preset media volume. I use pandora on the sleep timer and in my car, when I put my phone in the dock At 1am and fire up the sleep timer, I hate having to time turning down the volume.  (It changes from ringer to media volume control right before it starts playing, which is a little loud...) (Andrew B <abovill@gmail.com>)
-- Set time span in which volume is decreased - linear or logarithm (Gordian Klein <gordian.klein@googlemail.com>, stian jacobsen <stianjaco@gmail.com>)
-- "Wake-Up"/"Reset-Funktion" - Turn on Wifi/Bluetooth/AirPlaneMode again (Holger Trostl - holger.trostl@googlemail.com, bernunis - miguel.nunes@web.de, John Heinlein <johncheinleinjr@gmail.com>)
-- Own Sleep Chime + Volume (Kurt Kochenderfer - Kurtkoch@comcast.net)
-- Open alarm app automatically when timer ended (Timothy vanek - tjvanek@gmail.com)
-- Awaketimer, maybe as own application, to turn on player again (Pandora starts music right when started) (Joe Paulsey - joe.paulsey@gmail.com)
-- Autobackground the app (Eric blair - ericarthurblair@gmail.com)
-- option to return back to home screen (or alarm clock view) (rikk ford - froghelper88@gmail.com)
+- Allow the user to have a preset media volume. I use pandora on the sleep timer and in my car, when I put my phone in the dock At 1am and fire up the sleep timer, I hate having to time turning down the volume.  (It changes from ringer to media volume control right before it starts playing, which is a little loud...) (Andrew B)
+- Set time span in which volume is decreased - linear or logarithm (Gordian Klein, stian jacobsen)
+- "Wake-Up"/"Reset-Funktion" - Turn on Wifi/Bluetooth/AirPlaneMode again (Holger Trostl, bernunis, John Heinlein)
+- Own Sleep Chime + Volume (Kurt Kochenderfer)
+- Open alarm app automatically when timer ended (Timothy vanek)
+- Awaketimer, maybe as own application, to turn on player again (Pandora starts music right when started) (Joe Paulsey)
+- Autobackground the app (Eric blair)
+- option to return back to home screen (or alarm clock view) (rikk ford)
 - Widget
-  - (Start timer automatically when app starts) - (eric blair - ericarthurblair@gmail.com)
-  - 1x4 or 1x2 with "Start" and "Extend" and "Off" buttons (Gary - detox702@gmail.com)
-- more than one launch buttons or quicker selection of players? Like from 2 or 3 predefined. (adam oczos <adam.oczos@gmail.com>)
-- [currently impossible] Shut down the whole phone (Mathieu Miramont - mathieu.miramont@gmail.com, Antonio Tolliver - tony365.at@gmail.com, ...)
+  - (Start timer automatically when app starts) - (eric blair)
+  - 1x4 or 1x2 with "Start" and "Extend" and "Off" buttons (Gary)
+- more than one launch buttons or quicker selection of players? Like from 2 or 3 predefined. (adam oczos)
+- [currently impossible] Shut down the whole phone (Mathieu Miramont, Antonio Tolliver)
 [DONE]- "Launch <set player name>" beim Button anstelle von "Start Music Player" (???)
 [DONE]- Froyo: root
 ###########
 # Players #
 ###########
-- Double Twist media player ("epasch@gmail.com" <epasch@gmail.com>)
+- Double Twist media player (epasch)
 - New Meridian version
-- Mediascape (cody hansen <paxxx666@gmail.com>, Derrick <derrickhuang83@gmail.com>)
-[DONE]- Samsung Music Player - dyllon barge <dyllonbarge@gmail.com -- added in services + changelog
-[DONE]- Spotify (Matt Ots <matt@mattots.com>) -- added in apps + changelog
-[DONE]- Acast (Katie Reade <kreade@gmail.com>) -- added in services + changelog
-[DONE]- DPod (Mandie Wunsch <familiewunsch@googlemail.com>) -- added in services + changelog
+- Mediascape (cody hansen, Derrick)
+[DONE]- Samsung Music Player - dyllon barge -- added in services + changelog
+[DONE]- Spotify (Matt Ots) -- added in apps + changelog
+[DONE]- Acast (Katie Reade) -- added in services + changelog
+[DONE]- DPod (Mandie Wunsch) -- added in services + changelog
 [DONE]- "3" (Cubed)
-[DONE]- Rhapsody (J. Michael Wolf - jmichaelwolf@yahoo.com)
+[DONE]- Rhapsody (J. Michael Wolf)
 [DONE]- Grooveshark (NTulip)
-[DONE]- NRK RADIO by Liquid Air (Morten Haugen <morten@mortenhaugen.com>)
-[DONE]- Radiotime (radiotime.player) (Steve Broderick <sbrodchet@gmail.com>)
+[DONE]- NRK RADIO by Liquid Air (Morten Haugen)
+[DONE]- Radiotime (radiotime.player) (Steve Broderick)
 [DONE]- MortPlayer Music (john mcdonald)
 [DONE]- MaplePlayer v1.5.0 (john mcdonald)
-[DONE]- Astro Player (Dan - mdsmiddy@gmail.com)
+[DONE]- Astro Player (Dan)
