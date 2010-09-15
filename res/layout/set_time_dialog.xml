@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_height="wrap_content" android:orientation="vertical" android:layout_width="fill_parent" android:gravity="center_vertical|center_horizontal" android:minWidth="300sp">
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/TextViewMinutes" android:textStyle="bold" android:textSize="26sp" android:text="@string/x_minutes"></TextView><SeekBar android:id="@+id/SeekBar01" android:layout_height="wrap_content" android:layout_width="fill_parent" android:paddingLeft="5sp" android:paddingRight="5sp" android:paddingTop="20sp" android:max="179"></SeekBar>
+
+<LinearLayout android:id="@+id/LinearLayout01" android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="horizontal" android:gravity="center_horizontal" android:layout_weight="1" android:paddingTop="20sp" android:paddingBottom="20sp"><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/ButtonDec5" android:text="-5" android:textStyle="bold" android:textSize="30sp" android:minWidth="56sp"></Button><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/ButtonDec1" android:text="-1" android:textSize="30sp" android:textStyle="bold" android:minWidth="56sp"></Button>
+
+
+
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/TextViewSpacer" android:minWidth="10sp"></TextView><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/ButtonInc1" android:text="+1" android:textStyle="bold" android:textSize="30sp" android:minWidth="56sp"></Button>
+
+<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/ButtonInc5" android:text="+5" android:textSize="30sp" android:textStyle="bold" android:minWidth="56sp"></Button>
+
+</LinearLayout>
+
+
+
+
+<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/ButtonSet" android:text="@string/dialog_btn_set"></Button>
+</LinearLayout>

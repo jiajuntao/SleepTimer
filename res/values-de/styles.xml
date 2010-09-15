@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<resources> 
+    <!-- Base application theme is the default theme. --> 
+    <style name="Theme" parent="android:Theme"> 
+    </style> 
+
+    <!-- A theme for a custom dialog appearance.  Here we use an ugly 
+         custom frame. --> 
+    <style name="Theme.CustomDialog" parent="android:style/Theme.Dialog">
+    </style> 
+</resources>
