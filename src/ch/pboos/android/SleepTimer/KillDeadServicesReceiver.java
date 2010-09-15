@@ -3,6 +3,8 @@ package ch.pboos.android.SleepTimer;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.pboos.android.SleepTimer.service.SleepTimerService;
+
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -19,7 +21,7 @@ public class KillDeadServicesReceiver  extends BroadcastReceiver {
 	}
 
 	private void stopStopMusicService(Context context) {
-		Intent serviceIntent = new Intent(context, StopMusicService.class);
+		Intent serviceIntent = new Intent(context, SleepTimerService.class);
 		context.stopService(serviceIntent);
 	}
 

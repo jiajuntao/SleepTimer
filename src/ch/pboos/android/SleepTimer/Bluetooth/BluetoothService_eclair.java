@@ -2,8 +2,8 @@ package ch.pboos.android.SleepTimer.Bluetooth;
 
 //From: http://code.google.com/p/android-wifi-tether/source/browse/#svn/trunk/src/android/tether/system
 
-import android.app.Application;
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
 
 public class BluetoothService_eclair extends BluetoothService {
 
@@ -52,7 +52,7 @@ public class BluetoothService_eclair extends BluetoothService {
         }
 
         @Override
-        public void setApplication(Application application) {
+        public void setContext(Context application) {
                 // unneeded - not implemented
         }
 }

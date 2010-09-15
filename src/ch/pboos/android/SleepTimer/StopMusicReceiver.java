@@ -2,6 +2,8 @@ package ch.pboos.android.SleepTimer;
 
 import java.util.Calendar;
 
+import ch.pboos.android.SleepTimer.service.SleepTimerService;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -47,7 +49,7 @@ public class StopMusicReceiver extends BroadcastReceiver
 			setShakeInactive(context);
 			
 			SleepTimer.setNotification(context, context.getResources().getString(R.string.notify_goingtosleep), context.getResources().getString(R.string.notify_goingtosleep2));
-			Intent i = new Intent(context, StopMusicService.class);
+			Intent i = new Intent(context, SleepTimerService.class);
 			context.startService(i);
 		}	
     }

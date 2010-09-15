@@ -2,7 +2,7 @@ package ch.pboos.android.SleepTimer.Bluetooth;
 
 // From: http://code.google.com/p/android-wifi-tether/source/browse/#svn/trunk/src/android/tether/system
 
-import android.app.Application;
+import android.content.Context;
 import android.os.Build;
 
 public abstract class BluetoothService {
@@ -10,7 +10,7 @@ public abstract class BluetoothService {
     public abstract boolean startBluetooth();
     public abstract boolean stopBluetooth();
     public abstract boolean isBluetoothEnabled();
-    public abstract void setApplication(Application application);
+    public abstract void setContext(Context application);
     
     private static BluetoothService bluetoothService;
     

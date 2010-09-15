@@ -5,10 +5,11 @@ package ch.pboos.android.SleepTimer.Bluetooth;
 import java.lang.reflect.Method;
 
 import android.app.Application;
+import android.content.Context;
 
 public class BluetoothService_cupcake extends BluetoothService {
 
-        Application application = null;
+        Context context = null;
         
         /*
          * Bluetooth API is not exposed publicly, so we need to use reflection
@@ -16,7 +17,7 @@ public class BluetoothService_cupcake extends BluetoothService {
          */
         @SuppressWarnings("unchecked")
         private Object callBluetoothMethod(String methodName) {
-	        Object manager = this.application.getSystemService("bluetooth");
+	        Object manager = this.context.getSystemService("bluetooth");
 	        if(manager==null)
 	        	return false;
 	        Class c = manager.getClass();
@@ -70,7 +71,7 @@ public class BluetoothService_cupcake extends BluetoothService {
         }
 
         @Override
-        public void setApplication(Application application) {
-                this.application = application;
+        public void setContext(Context context) {
+                this.context = context;
         }
 }

@@ -1,5 +1,6 @@
 package ch.pboos.android.SleepTimer;
 
+import ch.pboos.android.SleepTimer.service.SleepTimerService;
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,7 +17,7 @@ public class SetVolumeBackReceiver extends BroadcastReceiver {
 		
 		AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
 		if(audioManager.isMusicActive())
-			StopMusicService.sendStopBroadcast(context);
+			SleepTimerService.sendStopBroadcast(context);
 
 		try {
 			Thread.sleep(5000);

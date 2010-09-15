@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
+import ch.pboos.android.SleepTimer.service.SleepTimerService;
+import ch.pboos.android.SleepTimer.service.SleepTimerServiceBinder;
+
 import com.nullwire.trace.ExceptionHandler;
 
 import android.app.Activity;
@@ -15,9 +18,11 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -25,6 +30,8 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.util.Log;
@@ -50,7 +57,28 @@ public class SleepTimer extends Activity {
 	private Button buttonStartStop;
 	private Button buttonStartPlayer;
 	private Button buttonSetMinutes;
+
 	private int sleep_minutes;
+	
+	private final Handler mHandler = new Handler();
+
+	SleepTimerServiceBinder sleepTimerService;
+	SleepTimerCallback sleepTimerCallback = new SleepTimerCallback(SleepTimer.this, mHandler, sleepTimerService);
+	ServiceConnection serviceConnection = new ServiceConnection() {
+		@Override
+		public void onServiceConnected(ComponentName name, IBinder service) {
+			Log.i("SleepTimer", "Service bound");
+			sleepTimerService = (SleepTimerServiceBinder) service;
+			sleepTimerService.registerCallback(sleepTimerCallback);
+		}
+
+		@Override
+		public void onServiceDisconnected(ComponentName arg0) {
+			Log.i("XtraZone", "Service unbound");
+			sleepTimerService = null;
+		}
+	};
+	
 	
 	/** Called when the activity is first created. */
     @Override
@@ -161,7 +189,24 @@ public class SleepTimer extends Activity {
         	AlertDialog alert = builder.create();
         	alert.show();
         }
+        
+        connectToService();
     }
+
+	private void connectToService() {
+		Intent intent = new Intent(this, SleepTimerService.class);
+		startService(intent);
+		bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+	}
+    
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (sleepTimerService != null) {
+			sleepTimerService.unregisterCallback(sleepTimerCallback);
+		}
+		unbindService(serviceConnection);
+	}
 
 	private int getAppVersionCode() {
 		PackageInfo pInfo = null;
