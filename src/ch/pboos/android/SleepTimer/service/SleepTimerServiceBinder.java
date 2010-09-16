@@ -10,6 +10,7 @@ public class SleepTimerServiceBinder extends Binder implements
 
 	private SleepTimerService _service;
 	private List<ISleepTimerCallback> _callbacks = new ArrayList<ISleepTimerCallback>();
+	private SleepTimerRunner _thread;
 	
 	public SleepTimerServiceBinder(SleepTimerService service) {
 		_service = service;
@@ -17,14 +18,16 @@ public class SleepTimerServiceBinder extends Binder implements
 	
 	@Override
 	public void start(int minutes) {
-		// TODO Auto-generated method stub
-
+		if(_thread==null) {
+			_thread = new SleepTimerRunner(_service, minutes);
+			_thread.start();
+		}
 	}
 
 	@Override
 	public void stop() {
-		// TODO Auto-generated method stub
-
+		_thread.stopRunner();
+		_thread = null;
 	}
 
 	@Override

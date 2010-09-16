@@ -14,7 +14,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.SystemClock;
@@ -22,6 +27,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.view.KeyEvent;
 import ch.pboos.android.SleepTimer.KillDeadServicesReceiver;
+import ch.pboos.android.SleepTimer.R;
 import ch.pboos.android.SleepTimer.RootUtils;
 import ch.pboos.android.SleepTimer.SetVolumeBackReceiver;
 import ch.pboos.android.SleepTimer.SleepTimer;
@@ -34,28 +40,48 @@ import com.nullwire.trace.ExceptionHandler;
 
 public class SleepTimerRunner extends Thread {
 	private Context _context;
-	private int _minutes;
-	private boolean _stopped;
+	private volatile int _minutes;
+	private volatile boolean _stopped;
+	private SensorShakeListener listener;
 	
 	public SleepTimerRunner(Context context, int minutes) {
-		ExceptionHandler.register(_context, "http://pboos.ch/bugs/server.php");
+		//ExceptionHandler.register(_context, "http://pboos.ch/bugs/server.php");
 		
 		_context = context;
 		_minutes = minutes;
 		_stopped = false;
 	}
 	
+	public void stopRunner() {
+		_stopped = true;
+		this.interrupt();
+	}
+	
 	@Override
 	public void run() {
 		super.run();
+		_stopped = false;
 		
-		for(int i=0 ; ( i<_minutes && !_stopped ) ; ++i) {
+		while(_minutes>0 && !_stopped) {
+			showMinutesLeftNotification();
+			
+			if(_minutes == 0 && isShakeExtendEnabled()) {
+				startShakeExtend();
+			}
+			
 			try {
 				sleep(1000*60); // sleep 1 minute
 			} catch (InterruptedException e) {
-				// do nothing, but go out of loop and check if done
+				// 
 			}
+			--_minutes;
 		}
+		stopShakeExtend();
+		
+		if(_stopped)
+			return;
+		
+		showGoingToSleepNotification();
 		
 		
 		int oldMusicVolumeLevel = dimMusicVolume();
@@ -69,8 +95,57 @@ public class SleepTimerRunner extends Thread {
 		stopMusic();
 		additionalStopSettings();
 		killDeadServices();
+		
+		if(audioManager.isMusicActive())
+			sendStopBroadcast();
+		
 		setVolumeBack(oldMusicVolumeLevel);
 		SleepTimerStatus.setRunning(_context, false);
+		
+		shutdownSleepTimer();
+	}
+
+	private void showGoingToSleepNotification() {
+		SleepTimer.setNotification(_context, _context.getResources().getString(R.string.notify_goingtosleep), _context.getResources().getString(R.string.notify_goingtosleep2));
+	}
+
+	private void showMinutesLeftNotification() {
+		SleepTimer.setNotification(_context, _minutes+" "+_context.getResources().getString(R.string.notify_minutes_left), _minutes+" "+_context.getResources().getString(R.string.notify_minutes_left_until_sleep));
+	}
+
+	private void startShakeExtend() {
+		playSound(_context);
+		
+		// register shakelistener
+    	listener = new SensorShakeListener(_context);
+    	SensorManager m_sensorManager = (SensorManager) _context.getSystemService(Context.SENSOR_SERVICE);
+    	int sensorIds = m_sensorManager.getSensors();
+    	boolean deviceSupportsAccelerometer = (sensorIds & Sensor.TYPE_ACCELEROMETER)==Sensor.TYPE_ACCELEROMETER;
+    	if(deviceSupportsAccelerometer)
+    		m_sensorManager.registerListener(listener, m_sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+	}
+	
+	private void stopShakeExtend() {
+		if(listener!=null){
+			SensorManager m_sensorManager = (SensorManager) _context.getSystemService(Context.SENSOR_SERVICE);
+			m_sensorManager.unregisterListener(listener);
+			listener = null;
+		}
+	}
+	
+	private void playSound(Context context) {
+		MediaPlayer mp = MediaPlayer.create(context, R.raw.harp);
+		mp.start();
+	}
+
+	private boolean isShakeExtendEnabled() {
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(_context);
+        return settings.getBoolean("shakeActivated", false);
+	}
+
+	private void shutdownSleepTimer() {
+		ActivityManager am = (ActivityManager)_context.getSystemService(Context.ACTIVITY_SERVICE);
+		am.restartPackage("ch.pboos.android.SleepTimer");
 	}
 
 
@@ -405,18 +480,12 @@ public class SleepTimerRunner extends Thread {
 	}
 
 	public void setVolumeBack(int oldMusicVolumeLevel) {
-		Intent newIntent = new Intent(_context, SetVolumeBackReceiver.class);
-		newIntent.putExtra(SetVolumeBackReceiver.INTENT_EXTRA_MUSIC_VOLUME,
-				oldMusicVolumeLevel);
-		PendingIntent sender = PendingIntent
-				.getBroadcast(_context, 0, newIntent, 0);
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTimeInMillis(System.currentTimeMillis());
-		calendar.add(Calendar.SECOND, 10);
-
-		// Schedule the alarm!
-		AlarmManager am = (AlarmManager) _context.getSystemService(Context.ALARM_SERVICE);
-		am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+		SleepTimer.stopNotification(_context);
+		
+		AudioManager audioManager = (AudioManager)_context.getSystemService(Context.AUDIO_SERVICE);
+		if(!audioManager.isMusicActive()){
+			audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, oldMusicVolumeLevel, 0);
+		}
 	}
 
 	public void killDeadServices() {
@@ -429,5 +498,52 @@ public class SleepTimerRunner extends Thread {
 		// Schedule the alarm!
 		AlarmManager am = (AlarmManager) _context.getSystemService(Context.ALARM_SERVICE);
 		am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+	}
+	
+    private class SensorShakeListener implements SensorEventListener{
+    	private Context context;
+		private boolean enteredOnce;
+    	
+		public SensorShakeListener(Context context) {
+			this.context = context;
+			enteredOnce=false;
+		}
+
+		@Override
+		public void onAccuracyChanged(Sensor arg0, int arg1) {
+			// accuracy doesn't matter in this case.
+		}
+	
+		@Override
+		public void onSensorChanged(SensorEvent event) {
+			if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) 
+	        { 				
+	             double forceThreshHold = 1.25f; // 1.5 
+	              
+	             double totalForce = 0.0f;
+	             totalForce += Math.pow(event.values[SensorManager.DATA_X]/SensorManager.GRAVITY_EARTH, 2.0); 
+	             totalForce += Math.pow(event.values[SensorManager.DATA_Y]/SensorManager.GRAVITY_EARTH, 2.0); 
+	             totalForce += Math.pow(event.values[SensorManager.DATA_Z]/SensorManager.GRAVITY_EARTH, 2.0); 
+	             totalForce = Math.sqrt(totalForce);
+	              
+	             if(totalForce > forceThreshHold) //  && (m_totalForcePrev > forceThreshHold)
+	             { 
+	            	 if(enteredOnce)
+	            		 return;
+	            	 enteredOnce=true;
+	            	 stopShakeExtend();
+	             	 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+	                 String shakeMinutes= settings.getString("shakeMinutes", "10");
+	                 int shakeMinutesAsInt;
+	                 try{
+	                	 shakeMinutesAsInt = Integer.parseInt(shakeMinutes);
+	                 } catch(Exception e){
+	                	 shakeMinutesAsInt=10;
+	                 }
+	            	 _minutes += shakeMinutesAsInt; // TODO: snoozeMinutes could be made better
+	            	 playSound(context);
+	             }
+	        }
+		}
 	}
 }

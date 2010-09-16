@@ -11,7 +11,7 @@
 			</intent-filter>
 		</activity>
 		<activity android:name="ChangeLog"></activity>
-		<service android:name="StopMusicService"></service>
+		<service android:name=".service.SleepTimerService"></service>
 		<receiver android:enabled="true" android:name="StopMusicReceiver"
 			android:label="StopMusicReceiver"></receiver>
 		<receiver android:enabled="true" android:name="KillDeadServicesReceiver"

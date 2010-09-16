@@ -194,6 +194,7 @@ public class SleepTimer extends Activity {
     }
 
 	private void connectToService() {
+		Log.i("SleepTimer", "Connecting to Service");
 		Intent intent = new Intent(this, SleepTimerService.class);
 		startService(intent);
 		bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
@@ -362,27 +363,11 @@ public class SleepTimer extends Activity {
 			setButtonMinutes(sleep_minutes);
 		}
 		
-		Intent intent = new Intent(SleepTimer.this, StopMusicReceiver.class);
-		intent.putExtra(INTENT_EXTRA_STOP_MINUTES, sleep_minutes);
-		
-		PendingIntent sender = PendingIntent.getBroadcast(SleepTimer.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTimeInMillis(System.currentTimeMillis());
-		calendar.add(Calendar.SECOND, TIME_BETWEEN_INFO);
-
-		// Schedule the alarm!
-		AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
-		am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
-
-		// Tell the user about what we did.
-		setNotificationMinutes(SleepTimer.this, Integer.toString(sleep_minutes));
-		Toast mToast = Toast.makeText(SleepTimer.this, String.format(SleepTimer.this.getResources().getString(R.string.notify_going_to_sleep_in), Integer.toString(sleep_minutes)),
-		        Toast.LENGTH_LONG);
-		mToast.show();
-		
-		SleepTimerStatus.setRunning(this, true);
-		setStartStopButtonText();
+		if(sleepTimerService!=null) {
+			sleepTimerService.start(sleep_minutes);
+		} else {
+			BugSender.sendBug(this, "Service not connected!", "When trying to start the SleepTimer.");
+		}
 	}
 
 	@Override

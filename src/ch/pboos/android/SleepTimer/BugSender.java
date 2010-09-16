@@ -1,6 +1,9 @@
 package ch.pboos.android.SleepTimer;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +31,7 @@ public class BugSender {
 			// Your DATA
 			nameValuePairs.add(new BasicNameValuePair("package_version", getSoftwareVersion(context)));
 			nameValuePairs.add(new BasicNameValuePair("package_name", getSoftwareName(context)));
-			String stacktrace = name + "\n\n"+text;
+			String stacktrace = name + "\n\n"+text + "\n\n"+getCurrentStackTrace();
 			nameValuePairs.add(new BasicNameValuePair("stacktrace", stacktrace));
 
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -43,6 +46,15 @@ public class BugSender {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private static String getCurrentStackTrace() {
+		final Writer result = new StringWriter();
+	    final PrintWriter printWriter = new PrintWriter(result);
+	    new Exception().printStackTrace(printWriter);
+	    return result.toString();
+	    
+		//return Thread.currentThread().getStackTrace();
 	}
 
 	private static String getSoftwareVersion(Context context) {
