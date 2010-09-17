@@ -307,8 +307,8 @@ public class SleepTimer extends Activity {
     }
 
 	private void startSleepTimer() {
-		if(sleep_minutes<1){
-			sleep_minutes=1;
+		if(sleep_minutes<0){
+			sleep_minutes=0;
 			setButtonMinutes(sleep_minutes);
 		}
 		

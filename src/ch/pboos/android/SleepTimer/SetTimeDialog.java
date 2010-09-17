@@ -41,7 +41,7 @@ public class SetTimeDialog extends Activity {
 		Bundle b = getIntent().getExtras();
 		int minutes = b.getInt("minutes");
 		textMinutes.setText(String.format(getResources().getString(R.string.x_minutes),Integer.toString(minutes)));
-		seekBar.setProgress(minutes-1);
+		seekBar.setProgress(minutes);
 		
 		buttonDec1.setOnClickListener(new OnClickListener() {
 			
@@ -103,7 +103,7 @@ public class SetTimeDialog extends Activity {
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromUser) {
-				textMinutes.setText(String.format(getResources().getString(R.string.x_minutes),Integer.toString(progress+1)));
+				textMinutes.setText(String.format(getResources().getString(R.string.x_minutes),Integer.toString(progress)));
 			}
 		});
 
@@ -112,7 +112,7 @@ public class SetTimeDialog extends Activity {
 			@Override
 			public void onClick(View v) {
 				Bundle bundle = new Bundle();
-				bundle.putInt("minutes", seekBar.getProgress()+1);
+				bundle.putInt("minutes", seekBar.getProgress());
 				Intent mIntent = new Intent();
 				mIntent.putExtras(bundle);
 				setResult(0, mIntent);
