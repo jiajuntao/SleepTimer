@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="pref_broadcast_stop_title">Sende Stop Broadcast</string>
+    <string name="pref_broadcast_stop_off">Ein Stop-Media-Broadcast wird NICHT gesendet.</string>
+    <string name="pref_broadcast_stop_on">Ein Stop-Media-Broadcast wird gesendet.</string>
+    <string name="pref_broadcast_pause_title">Sende Pausieren Broadcast</string>
+    <string name="pref_broadcast_pause_off">Ein Pausiere-Media-Broadcast wird NICHT gesendet.</string>
+    <string name="pref_broadcast_pause_on">Ein Pausiere-Media-Broadcast wird gesendet. Kann andere Player starten.</string>
+    <string name="pref_category_shakeextend">Shake Extend</string>
     <string name="pref_airplane_summary">Wenn gesetzt, wird das Handy in den Flugmodus gesetzt.</string>
     <string name="pref_airplane">Flugmodus einschalten</string>
     <string name="pref_bluetooth_summary">Wenn gesetzt, wird Bluetooth ausgeschaltet.</string>
