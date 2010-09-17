@@ -24,6 +24,8 @@ public class ChangeLog extends Activity {
 		"<h1>ChangeLog</h1>" +
 		"<h2>0.10.1</h2>" +
 		"- Background service improved<br/>" +
+		"- 0 minutes allowed (for testing if player will be correctly shut down)<br/>" +
+		"- Fix: other player started (see settings pause/stop broadcast)<br/>" +
 		"- Added Settings: Send pause/stop media broadcast<br/>" +
 		"- Added player: Zimly Media Player (thx to Tony T.)<br/>" +
 		"- Added player: Androrb (thx to Simon O.)<br/>" +
