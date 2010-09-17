@@ -1,6 +1,6 @@
 package ch.pboos.android.SleepTimer.StopConnections;
 
-import ch.pboos.android.SleepTimer.KillDeadServicesReceiver;
+import ch.pboos.android.SleepTimer.DeadServicesKiller;
 import android.content.ComponentName;
 import android.content.ServiceConnection;
 import android.os.DeadObjectException;
@@ -17,7 +17,7 @@ public class HtcMediaPlayerStopperServiceConnection implements ServiceConnection
 				mService.pause();
 			}
 		} catch(DeadObjectException e){
-			KillDeadServicesReceiver.addDeadService("com.htc.music");
+			DeadServicesKiller.addDeadService("com.htc.music");
 			return;
 		} catch (Exception e) {
 			e.printStackTrace();

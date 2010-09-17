@@ -5,12 +5,11 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
+import com.nullwire.trace.ExceptionHandler;
+
 import android.app.ActivityManager;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,29 +25,25 @@ import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.view.KeyEvent;
-import ch.pboos.android.SleepTimer.KillDeadServicesReceiver;
+import ch.pboos.android.SleepTimer.DeadServicesKiller;
 import ch.pboos.android.SleepTimer.R;
 import ch.pboos.android.SleepTimer.RootUtils;
-import ch.pboos.android.SleepTimer.SetVolumeBackReceiver;
 import ch.pboos.android.SleepTimer.SleepTimer;
-import ch.pboos.android.SleepTimer.SleepTimerStatus;
 import ch.pboos.android.SleepTimer.Bluetooth.BluetoothService;
 import ch.pboos.android.SleepTimer.StopConnections.AndroidMediaPlayerStopperServiceConnection;
 import ch.pboos.android.SleepTimer.StopConnections.HtcMediaPlayerStopperServiceConnection;
 
-import com.nullwire.trace.ExceptionHandler;
-
 public class SleepTimerRunner extends Thread {
-	private Context _context;
-	private volatile int _minutes;
+	private SleepTimerService _service;
+	private volatile int _minutesRemaining;
 	private volatile boolean _stopped;
 	private SensorShakeListener listener;
 	
-	public SleepTimerRunner(Context context, int minutes) {
-		//ExceptionHandler.register(_context, "http://pboos.ch/bugs/server.php");
+	public SleepTimerRunner(SleepTimerService service, int minutes) {
+		ExceptionHandler.register(service, "http://pboos.ch/bugs/server.php");
 		
-		_context = context;
-		_minutes = minutes;
+		_service = service;
+		_minutesRemaining = minutes;
 		_stopped = false;
 	}
 	
@@ -62,10 +57,10 @@ public class SleepTimerRunner extends Thread {
 		super.run();
 		_stopped = false;
 		
-		while(_minutes>0 && !_stopped) {
-			showMinutesLeftNotification();
+		while(_minutesRemaining>0 && !_stopped) {
+			_service.setState(SleepTimerService.STATE_RUNNING, _minutesRemaining);
 			
-			if(_minutes == 0 && isShakeExtendEnabled()) {
+			if(_minutesRemaining == 1 && isShakeExtendEnabled()) {
 				startShakeExtend();
 			}
 			
@@ -74,18 +69,17 @@ public class SleepTimerRunner extends Thread {
 			} catch (InterruptedException e) {
 				// 
 			}
-			--_minutes;
+			--_minutesRemaining;
 		}
 		stopShakeExtend();
 		
 		if(_stopped)
 			return;
 		
-		showGoingToSleepNotification();
-		
+		_service.setState(SleepTimerService.STATE_SHUTTING_DOWN);
 		
 		int oldMusicVolumeLevel = dimMusicVolume();
-		AudioManager audioManager = (AudioManager)_context.getSystemService(Context.AUDIO_SERVICE);
+		AudioManager audioManager = (AudioManager)_service.getSystemService(Context.AUDIO_SERVICE);
 		if(audioManager.isMusicActive()){
 			sendStopBroadcast();
 			sleepAndIgnoreInterrupt(300);
@@ -100,25 +94,30 @@ public class SleepTimerRunner extends Thread {
 			sendStopBroadcast();
 		
 		setVolumeBack(oldMusicVolumeLevel);
-		SleepTimerStatus.setRunning(_context, false);
 		
+		_service.stopSleepTimer();
 		shutdownSleepTimer();
 	}
 
-	private void showGoingToSleepNotification() {
-		SleepTimer.setNotification(_context, _context.getResources().getString(R.string.notify_goingtosleep), _context.getResources().getString(R.string.notify_goingtosleep2));
+
+	public int getMinutesRemaining() {
+		return _minutesRemaining;
 	}
 
-	private void showMinutesLeftNotification() {
-		SleepTimer.setNotification(_context, _minutes+" "+_context.getResources().getString(R.string.notify_minutes_left), _minutes+" "+_context.getResources().getString(R.string.notify_minutes_left_until_sleep));
+	public void extendMinutes(int extendMinutes) {		
+		_minutesRemaining += extendMinutes;
+		_service.setState(SleepTimerService.STATE_RUNNING, _minutesRemaining);
 	}
-
+	
 	private void startShakeExtend() {
-		playSound(_context);
+		if(listener!=null)
+			return;
+		
+		playSound(_service);
 		
 		// register shakelistener
-    	listener = new SensorShakeListener(_context);
-    	SensorManager m_sensorManager = (SensorManager) _context.getSystemService(Context.SENSOR_SERVICE);
+    	listener = new SensorShakeListener(_service);
+    	SensorManager m_sensorManager = (SensorManager) _service.getSystemService(Context.SENSOR_SERVICE);
     	int sensorIds = m_sensorManager.getSensors();
     	boolean deviceSupportsAccelerometer = (sensorIds & Sensor.TYPE_ACCELEROMETER)==Sensor.TYPE_ACCELEROMETER;
     	if(deviceSupportsAccelerometer)
@@ -127,7 +126,7 @@ public class SleepTimerRunner extends Thread {
 	
 	private void stopShakeExtend() {
 		if(listener!=null){
-			SensorManager m_sensorManager = (SensorManager) _context.getSystemService(Context.SENSOR_SERVICE);
+			SensorManager m_sensorManager = (SensorManager) _service.getSystemService(Context.SENSOR_SERVICE);
 			m_sensorManager.unregisterListener(listener);
 			listener = null;
 		}
@@ -139,12 +138,12 @@ public class SleepTimerRunner extends Thread {
 	}
 
 	private boolean isShakeExtendEnabled() {
-		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(_context);
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(_service);
         return settings.getBoolean("shakeActivated", false);
 	}
 
 	private void shutdownSleepTimer() {
-		ActivityManager am = (ActivityManager)_context.getSystemService(Context.ACTIVITY_SERVICE);
+		ActivityManager am = (ActivityManager)_service.getSystemService(Context.ACTIVITY_SERVICE);
 		am.restartPackage("ch.pboos.android.SleepTimer");
 	}
 
@@ -160,7 +159,7 @@ public class SleepTimerRunner extends Thread {
 
 	private void additionalStopSettings() {
 		SharedPreferences settings = PreferenceManager
-				.getDefaultSharedPreferences(_context);
+				.getDefaultSharedPreferences(_service);
 		boolean turnOffWifi = settings.getBoolean("pref_stop_wifi", false);
 		boolean turnOffBluetooth = settings.getBoolean("pref_stop_bluetooth",
 				false);
@@ -180,38 +179,38 @@ public class SleepTimerRunner extends Thread {
 
 	private void turnOffBluetooth() {
 		BluetoothService service = BluetoothService.getInstance();
-		service.setContext(_context);
+		service.setContext(_service);
 		service.stopBluetooth();
 	}
 
 	private void goIntoAirplaneMode() {
-		boolean isEnabled = Settings.System.getInt(_context.getContentResolver(),
+		boolean isEnabled = Settings.System.getInt(_service.getContentResolver(),
 				Settings.System.AIRPLANE_MODE_ON, 0) == 1;
 		if (!isEnabled) {
 			// toggle airplane mode
-			Settings.System.putInt(_context.getContentResolver(),
+			Settings.System.putInt(_service.getContentResolver(),
 					Settings.System.AIRPLANE_MODE_ON, isEnabled ? 0 : 1);
 
 			// Post an intent to reload
 			Intent intent = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
 			intent.putExtra("state", !isEnabled);
-			_context.sendBroadcast(intent);
+			_service.sendBroadcast(intent);
 		}
 	}
 
 	private void muteNotifications() {
-		AudioManager manager = (AudioManager) _context.getSystemService(Context.AUDIO_SERVICE);
+		AudioManager manager = (AudioManager) _service.getSystemService(Context.AUDIO_SERVICE);
 		manager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 0, 0);
 	}
 
 	private void turnOffWifi() {
-		WifiManager mWm = (WifiManager) _context.getSystemService(Context.WIFI_SERVICE);
+		WifiManager mWm = (WifiManager) _service.getSystemService(Context.WIFI_SERVICE);
 		if (mWm.isWifiEnabled())
 			mWm.setWifiEnabled(false);
 	}
 
 	private int dimMusicVolume() {
-		AudioManager manager = (AudioManager) _context.getSystemService(Context.AUDIO_SERVICE);
+		AudioManager manager = (AudioManager) _service.getSystemService(Context.AUDIO_SERVICE);
 		int vol = manager.getStreamVolume(AudioManager.STREAM_MUSIC);
 		for (int i = vol - 1; i >= 0; i--) {
 			manager.setStreamVolume(AudioManager.STREAM_MUSIC, i, 0);
@@ -226,7 +225,7 @@ public class SleepTimerRunner extends Thread {
 	private void stopMusic() {
 		List<String> restartMusicServices = getFixSetServices();
 
-		ActivityManager am = (ActivityManager) _context.getSystemService(Context.ACTIVITY_SERVICE);
+		ActivityManager am = (ActivityManager) _service.getSystemService(Context.ACTIVITY_SERVICE);
 		List<ActivityManager.RunningServiceInfo> rs = am.getRunningServices(50);
 		for (int i = 0; i < rs.size(); i++) {
 			ActivityManager.RunningServiceInfo rsi = rs.get(i);
@@ -268,13 +267,13 @@ public class SleepTimerRunner extends Thread {
 		KeyEvent downEvent = new KeyEvent(eventtime, eventtime,
 				KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, 0);
 		downIntent.putExtra(Intent.EXTRA_KEY_EVENT, downEvent);
-		_context.sendOrderedBroadcast(downIntent, null);
+		_service.sendOrderedBroadcast(downIntent, null);
 
 		Intent upIntent = new Intent(Intent.ACTION_MEDIA_BUTTON, null);
 		KeyEvent upEvent = new KeyEvent(eventtime, eventtime+1,
 				KeyEvent.ACTION_UP, KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, 0);
 		upIntent.putExtra(Intent.EXTRA_KEY_EVENT, upEvent);
-		_context.sendOrderedBroadcast(upIntent, null);
+		_service.sendOrderedBroadcast(upIntent, null);
 	}
 	
 	public void sendStopBroadcast() {
@@ -284,19 +283,19 @@ public class SleepTimerRunner extends Thread {
 		KeyEvent downEvent = new KeyEvent(eventtime, eventtime,
 				KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MEDIA_STOP, 0);
 		downIntent.putExtra(Intent.EXTRA_KEY_EVENT, downEvent);
-		_context.sendOrderedBroadcast(downIntent, null);
+		_service.sendOrderedBroadcast(downIntent, null);
 
 		Intent upIntent = new Intent(Intent.ACTION_MEDIA_BUTTON, null);
 		KeyEvent upEvent = new KeyEvent(eventtime, eventtime+1,
 				KeyEvent.ACTION_UP, KeyEvent.KEYCODE_MEDIA_STOP, 0);
 		upIntent.putExtra(Intent.EXTRA_KEY_EVENT, upEvent);
-		_context.sendOrderedBroadcast(upIntent, null);
+		_service.sendOrderedBroadcast(upIntent, null);
 	}
 
 	private void forceStopPackage(ActivityManager am, String pkgName) {
 
 		int sdkVersion = Integer.parseInt(Build.VERSION.SDK);
-		if (sdkVersion == 8 && RootUtils.hasRoot(_context, false)) {
+		if (sdkVersion == 8 && RootUtils.hasRoot(_service, false)) {
 			try {
 				Process process = Runtime.getRuntime().exec("su");
 				DataOutputStream os = new DataOutputStream(process
@@ -347,8 +346,8 @@ public class SleepTimerRunner extends Thread {
 		intent.setClassName("com.android.music",
 				"com.android.music.MediaPlaybackService");
 		AndroidMediaPlayerStopperServiceConnection conn = new AndroidMediaPlayerStopperServiceConnection();
-		_context.bindService(intent, conn, 0);
-		_context.unbindService(conn);
+		_service.bindService(intent, conn, 0);
+		_service.unbindService(conn);
 	}
 
 	private void stopHtcPlayer() {
@@ -356,8 +355,8 @@ public class SleepTimerRunner extends Thread {
 		intent.setClassName("com.htc.music",
 				"com.htc.music.MediaPlaybackService");
 		HtcMediaPlayerStopperServiceConnection conn = new HtcMediaPlayerStopperServiceConnection();
-		_context.bindService(intent, conn, 0);
-		_context.unbindService(conn);
+		_service.bindService(intent, conn, 0);
+		_service.unbindService(conn);
 	}
 
 	private List<String> getFixSetApps() {
@@ -473,31 +472,21 @@ public class SleepTimerRunner extends Thread {
 	private String getOwnService() {
 		// Get own set service
 		SharedPreferences settings = PreferenceManager
-				.getDefaultSharedPreferences(_context);
+				.getDefaultSharedPreferences(_service);
 		String ownService = settings
 				.getString(SleepTimer.PREFS_OWN_SERVICE, "");
 		return ownService;
 	}
 
 	public void setVolumeBack(int oldMusicVolumeLevel) {
-		SleepTimer.stopNotification(_context);
-		
-		AudioManager audioManager = (AudioManager)_context.getSystemService(Context.AUDIO_SERVICE);
+		AudioManager audioManager = (AudioManager)_service.getSystemService(Context.AUDIO_SERVICE);
 		if(!audioManager.isMusicActive()){
 			audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, oldMusicVolumeLevel, 0);
 		}
 	}
 
 	public void killDeadServices() {
-		Intent newIntent = new Intent(_context, KillDeadServicesReceiver.class);
-		PendingIntent sender = PendingIntent.getBroadcast(_context, 0, newIntent, 0);
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTimeInMillis(System.currentTimeMillis());
-		calendar.add(Calendar.SECOND, 8);
-
-		// Schedule the alarm!
-		AlarmManager am = (AlarmManager) _context.getSystemService(Context.ALARM_SERVICE);
-		am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+		DeadServicesKiller.killAddedServices(_service);
 	}
 	
     private class SensorShakeListener implements SensorEventListener{
@@ -540,7 +529,7 @@ public class SleepTimerRunner extends Thread {
 	                 } catch(Exception e){
 	                	 shakeMinutesAsInt=10;
 	                 }
-	            	 _minutes += shakeMinutesAsInt; // TODO: snoozeMinutes could be made better
+	            	 extendMinutes(shakeMinutesAsInt); // TODO: snoozeMinutes could be made better
 	            	 playSound(context);
 	             }
 	        }

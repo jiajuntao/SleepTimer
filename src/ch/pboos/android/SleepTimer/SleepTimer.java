@@ -1,7 +1,6 @@
 package ch.pboos.android.SleepTimer;
 
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.List;
 
 import ch.pboos.android.SleepTimer.service.SleepTimerService;
@@ -11,12 +10,8 @@ import com.nullwire.trace.ExceptionHandler;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
@@ -49,7 +44,6 @@ public class SleepTimer extends Activity {
 	public static final String PREFS_MINUTES = "minutes";
 	public static final String INTENT_EXTRA_STOP_MINUTES = "stopMinutes";
 	public static final int TIME_BETWEEN_INFO = 60; // TODO: set time again to 60
-	private static final int SLEEP_TIMER_NOTIFICATION_ID = 47319;
 	protected static final String PREFS_MUSIC_PLAYER = "pref_musicapp";
 	protected static final String PREFS_MUSIC_PLAYER_NAME = "pref_music_app_name";
 	private static final String PREFS_INFO_VERSION = "pref_info_version";
@@ -74,7 +68,7 @@ public class SleepTimer extends Activity {
 
 		@Override
 		public void onServiceDisconnected(ComponentName arg0) {
-			Log.i("XtraZone", "Service unbound");
+			Log.i("SleepTimer", "Service unbound");
 			sleepTimerService = null;
 		}
 	};
@@ -144,10 +138,10 @@ public class SleepTimer extends Activity {
         buttonStartStop.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				if(!SleepTimerStatus.isRunning(SleepTimer.this)){
-					startSleepTimer();
-				} else {
+				if(sleepTimerService.isRunning()){
 					stopSleepTimer();
+				} else {
+					startSleepTimer();
 				}
 			}
         });
@@ -223,53 +217,7 @@ public class SleepTimer extends Activity {
 	}
     
     private void stopSleepTimer() {
-		Intent intent = new Intent(SleepTimer.this, StopMusicReceiver.class);
-		intent.putExtra(INTENT_EXTRA_STOP_MINUTES, 0);
-		PendingIntent sender = PendingIntent.getBroadcast(SleepTimer.this,
-		        0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-		// And cancel the alarm.
-		AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
-		am.cancel(sender);
-		stopNotification(SleepTimer.this);
-		
-		SleepTimerStatus.setRunning(this, false);
-		setStartStopButtonText();
-		
-		StopMusicReceiver.setShakeInactive(SleepTimer.this);
-	}
-
-
-	public static void setNotificationMinutes(Context context, String minutes) {
-		setNotification(context, minutes+" "+context.getResources().getString(R.string.notify_minutes_left), minutes+" "+context.getResources().getString(R.string.notify_minutes_left_until_sleep));
-	}
-    
-	public static void setNotification(Context context, String text, String additional){
-		String ns = Context.NOTIFICATION_SERVICE;
-		NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(ns);
-		
-		// Short Information
-		int icon = R.drawable.sleep_icon;
-		CharSequence tickerText = text;
-		long when = System.currentTimeMillis();
-
-		Notification notification = new Notification(icon, tickerText, when);
-		notification.flags = notification.flags | Notification.FLAG_ONGOING_EVENT;
-		
-		// Extended Information
-		CharSequence contentTitle = "Sleep Timer";
-		CharSequence contentText = additional;
-		Intent notificationIntent = new Intent(context, SleepTimer.class);
-		PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
-		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
-		
-		// Pass to NotificationManager
-		mNotificationManager.notify(SLEEP_TIMER_NOTIFICATION_ID, notification);
-	}
-	
-	public static void stopNotification(Context context){
-		String ns = Context.NOTIFICATION_SERVICE;
-		NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(ns);
-		mNotificationManager.cancel(SLEEP_TIMER_NOTIFICATION_ID);
+		sleepTimerService.stop();
 	}
 	
 	/* Creates the menu items */
@@ -373,7 +321,6 @@ public class SleepTimer extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		setStartStopButtonText();
 		Button startPlayerButton = (Button)findViewById(R.id.Button_StartPlayer);
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(SleepTimer.this);
         String musicPlayerName = settings.getString(PREFS_MUSIC_PLAYER_NAME, "");
@@ -382,20 +329,20 @@ public class SleepTimer extends Activity {
         String buttonText = String.format(getResources().getString(R.string.button_start_player), musicPlayerName);
 		startPlayerButton.setText(buttonText);
 	}
-
-	private void setStartStopButtonText() {
-		setStartStopButtonText(SleepTimerStatus.isRunning(this));
-	}
 	
-	private void setStartStopButtonText(boolean isRunning){
+	private void setStartStopButtonText(int sleepTimerState){
 		Button startStopButton = (Button)findViewById(R.id.ButtonStart);
-		if(isRunning){
-			startStopButton.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_delete, 0, 0, 0);
-			startStopButton.setText(R.string.button_stop_sleeptimer);
-		} else {
+		if(sleepTimerState == SleepTimerService.STATE_STOPPED){
 			startStopButton.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_media_play, 0, 0, 0);
 			startStopButton.setText(R.string.button_start_sleeptimer);
+		} else {
+			startStopButton.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_delete, 0, 0, 0);
+			startStopButton.setText(R.string.button_stop_sleeptimer);
 		}
+	}
+
+	public void updateSleepTimerState(int state, int minutes) {
+		setStartStopButtonText(state);
 	}
 	
 	

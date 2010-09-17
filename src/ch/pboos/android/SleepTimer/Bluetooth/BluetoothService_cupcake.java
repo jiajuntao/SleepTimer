@@ -4,7 +4,6 @@ package ch.pboos.android.SleepTimer.Bluetooth;
 
 import java.lang.reflect.Method;
 
-import android.app.Application;
 import android.content.Context;
 
 public class BluetoothService_cupcake extends BluetoothService {

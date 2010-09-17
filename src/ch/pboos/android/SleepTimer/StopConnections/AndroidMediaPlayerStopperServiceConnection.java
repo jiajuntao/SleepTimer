@@ -5,7 +5,7 @@ import android.content.ServiceConnection;
 import android.os.DeadObjectException;
 import android.os.IBinder;
 
-import ch.pboos.android.SleepTimer.KillDeadServicesReceiver;
+import ch.pboos.android.SleepTimer.DeadServicesKiller;
 
 import com.android.music.IMediaPlaybackService;
 
@@ -20,7 +20,7 @@ public class AndroidMediaPlayerStopperServiceConnection implements ServiceConnec
 				mService.pause();
 			}
 		} catch(DeadObjectException e){
-			KillDeadServicesReceiver.addDeadService("com.android.music");
+			DeadServicesKiller.addDeadService("com.android.music");
 			return;
 		} catch (Exception e) {
 			e.printStackTrace();

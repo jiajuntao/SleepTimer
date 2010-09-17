@@ -1,5 +1,5 @@
 package ch.pboos.android.SleepTimer.service;
 
 public interface ISleepTimerCallback {
-	void stateUpdated();
+	void stateUpdated(int currentState, int minutes);
 }
