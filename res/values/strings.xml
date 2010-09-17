@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="pref_broadcast_stop_title">Send Stop Broadcast</string>
+    <string name="pref_broadcast_stop_off">A media stop broadcast will NOT be sent.</string>
+    <string name="pref_broadcast_stop_on">A media stop broadcast will be sent.</string>
+    <string name="pref_broadcast_pause_title">Send Pause Broadcast</string>
+    <string name="pref_broadcast_pause_off">A media pause broadcast will NOT be sent.</string>
+    <string name="pref_broadcast_pause_on">A media pause broadcast will be sent. Might start other players.</string>
     <string name="pref_category_shakeextend">Shake Extend</string>
     <string name="pref_airplane_summary">If set, SleepTimer will turn on airplane mode.</string>
     <string name="pref_airplane">Turn on airplane mode</string>

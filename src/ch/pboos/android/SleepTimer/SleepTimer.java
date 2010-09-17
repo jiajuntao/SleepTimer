@@ -150,38 +150,40 @@ public class SleepTimer extends Activity {
         final int appVersion = getAppVersionCode();
 
         int lastAppVersion = settings.getInt(PREFS_INFO_VERSION, 0);
-        if(Integer.valueOf(Build.VERSION.SDK)>7 && lastAppVersion < appVersion){
-        	Toast.makeText(this, getString(R.string.message_froyo_checkroot), Toast.LENGTH_LONG);
-        	
-        	AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        	if(RootUtils.hasRoot(this, false)) {
-	        	builder.setTitle(getString(R.string.message_froyo_and_higher_title))
-        		   .setMessage(getString(R.string.message_froyo_root))
-        	       .setCancelable(false)
-        	       .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
-			           public void onClick(DialogInterface dialog, int id) {
-			        	   savePreferences(PREFS_INFO_VERSION, appVersion); // to give root
-			        	   try {
-			        		   Runtime.getRuntime().exec("su");
-			        	   } catch (IOException e) {
-			        		   e.printStackTrace();
-			        	   }
-			        	   dialog.cancel();
-			           }
-        	       });
-        	} else {
-        		builder.setTitle(getString(R.string.message_froyo_and_higher_title))
-     		   .setMessage(getString(R.string.message_froyo_noroot))
-     	       .setCancelable(false)
-     	       .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
-			           public void onClick(DialogInterface dialog, int id) {
-			        	   savePreferences(PREFS_INFO_VERSION, appVersion); // to give root
-			        	   dialog.cancel();
-			           }
-     	       });
-    		}
-        	AlertDialog alert = builder.create();
-        	alert.show();
+        if(lastAppVersion < appVersion){
+        	if(Integer.valueOf(Build.VERSION.SDK)>7 ) {
+	        	Toast.makeText(this, getString(R.string.message_froyo_checkroot), Toast.LENGTH_LONG);
+	        	
+	        	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	        	if(RootUtils.hasRoot(this, false)) {
+		        	builder.setTitle(getString(R.string.message_froyo_and_higher_title))
+	        		   .setMessage(getString(R.string.message_froyo_root))
+	        	       .setCancelable(false)
+	        	       .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
+				           public void onClick(DialogInterface dialog, int id) {
+				        	   savePreferences(PREFS_INFO_VERSION, appVersion); // to give root
+				        	   try {
+				        		   Runtime.getRuntime().exec("su");
+				        	   } catch (IOException e) {
+				        		   e.printStackTrace();
+				        	   }
+				        	   dialog.cancel();
+				           }
+	        	       });
+	        	} else {
+	        		builder.setTitle(getString(R.string.message_froyo_and_higher_title))
+	     		   .setMessage(getString(R.string.message_froyo_noroot))
+	     	       .setCancelable(false)
+	     	       .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
+				           public void onClick(DialogInterface dialog, int id) {
+				        	   savePreferences(PREFS_INFO_VERSION, appVersion); // to give root
+				        	   dialog.cancel();
+				           }
+	     	       });
+	    		}
+	        	AlertDialog alert = builder.create();
+	        	alert.show();
+        	}
         }
         
         connectToService();
@@ -257,7 +259,7 @@ public class SleepTimer extends Activity {
 						List<ActivityManager.RunningServiceInfo> rs = am.getRunningServices(50);
 						for (int i=0; i<rs.size(); i++) {
 							ActivityManager.RunningServiceInfo rsi = rs.get(i);
-							sendText += rsi.process+" - "+rsi.service.getClassName()+"<br/>";
+							sendText += rsi.service.getPackageName()+": "+rsi.process+" - "+rsi.service.getClassName()+"<br/>";
 						}
 					}
 					

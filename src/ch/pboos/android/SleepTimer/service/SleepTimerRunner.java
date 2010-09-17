@@ -65,7 +65,7 @@ public class SleepTimerRunner extends Thread {
 			}
 			
 			try {
-				sleep(1000*60); // sleep 1 minute
+				sleep(1000*10); // sleep 1 minute
 			} catch (InterruptedException e) {
 				// 
 			}
@@ -80,18 +80,23 @@ public class SleepTimerRunner extends Thread {
 		
 		int oldMusicVolumeLevel = dimMusicVolume();
 		AudioManager audioManager = (AudioManager)_service.getSystemService(Context.AUDIO_SERVICE);
-		if(audioManager.isMusicActive()){
-			sendStopBroadcast();
-			sleepAndIgnoreInterrupt(300);
+		if(audioManager.isMusicActive() && shouldSendPauseBroadcast()){
 			sendPauseBroadcast();
+			sleepAndIgnoreInterrupt(3000);
 		}
-		sleepAndIgnoreInterrupt(300);
+		
+		if(audioManager.isMusicActive() && shouldSendStopBroadcast()){
+			sendStopBroadcast();
+			sleepAndIgnoreInterrupt(1000);
+		}
+		
+		sleepAndIgnoreInterrupt(1000);
 		stopMusic();
 		additionalStopSettings();
 		killDeadServices();
 		
 		sleepAndIgnoreInterrupt(1000);
-		if(audioManager.isMusicActive())
+		if(audioManager.isMusicActive() && shouldSendStopBroadcast())
 			sendStopBroadcast();
 		
 		sleepAndIgnoreInterrupt(5000);
@@ -101,6 +106,16 @@ public class SleepTimerRunner extends Thread {
 		shutdownSleepTimer();
 	}
 
+
+	private boolean shouldSendStopBroadcast() {
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(_service);
+        return settings.getBoolean(_service.getString(R.string.attr_broadcast_stop), false);
+	}
+
+	private boolean shouldSendPauseBroadcast() {
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(_service);
+        return settings.getBoolean(_service.getString(R.string.attr_broadcast_pause), true);
+	}
 
 	public int getMinutesRemaining() {
 		return _minutesRemaining;

@@ -6,18 +6,31 @@
 			android:summary="@string/pref_music_app_summary" android:key="pref_musicapp"></Preference>
 		<Preference android:title="@string/pref_ownservice"
 			android:summary="@string/pref_ownservice_summary" android:key="ownService"></Preference>
-		
-		
-	</PreferenceCategory><PreferenceCategory android:title="@string/pref_category_shakeextend"><CheckBoxPreference android:defaultValue="false" android:title="@string/pref_shakeextend" android:key="shakeActivated" android:summary="@string/pref_shakeextend_comment"></CheckBoxPreference><EditTextPreference android:defaultValue="10" android:summary="@string/pref_shakeextend_minutes_comment" android:title="@string/pref_shakeextend_minutes" android:key="shakeMinutes"></EditTextPreference>
-</PreferenceCategory>
+
+		Ï
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/pref_category_shakeextend">
+		<CheckBoxPreference android:defaultValue="false"
+			android:title="@string/pref_shakeextend" android:key="shakeActivated"
+			android:summary="@string/pref_shakeextend_comment"></CheckBoxPreference>
+		<EditTextPreference android:defaultValue="10"
+			android:summary="@string/pref_shakeextend_minutes_comment"
+			android:title="@string/pref_shakeextend_minutes" android:key="shakeMinutes"></EditTextPreference>
+	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_category_after_countdown">
-		<CheckBoxPreference android:title="@string/pref_stop_wifi"
+		<CheckBoxPreference android:summaryOn="@string/pref_broadcast_pause_on" android:summaryOff="@string/pref_broadcast_pause_off" android:key="@string/attr_broadcast_pause" android:title="@string/pref_broadcast_pause_title" android:defaultValue="true"></CheckBoxPreference><CheckBoxPreference android:summaryOn="@string/pref_broadcast_stop_on" android:summaryOff="@string/pref_broadcast_stop_off" android:key="@string/attr_broadcast_stop" android:title="@string/pref_broadcast_stop_title" android:defaultValue="false"></CheckBoxPreference><CheckBoxPreference android:title="@string/pref_stop_wifi"
 			android:key="pref_stop_wifi" android:summary="@string/pref_stop_wifi_summary"></CheckBoxPreference>
-		<CheckBoxPreference android:key="pref_stop_bluetooth" android:title="@string/pref_bluetooth" android:summary="@string/pref_bluetooth_summary"></CheckBoxPreference><CheckBoxPreference android:key="pref_go_airplane" android:title="@string/pref_airplane" android:summary="@string/pref_airplane_summary"></CheckBoxPreference><CheckBoxPreference android:title="@string/pref_mute_notifications"
+		<CheckBoxPreference android:key="pref_stop_bluetooth"
+			android:title="@string/pref_bluetooth" android:summary="@string/pref_bluetooth_summary"></CheckBoxPreference>
+		<CheckBoxPreference android:key="pref_go_airplane"
+			android:title="@string/pref_airplane" android:summary="@string/pref_airplane_summary"></CheckBoxPreference>
+		<CheckBoxPreference android:title="@string/pref_mute_notifications"
 			android:key="pref_mute_notifications" android:summary="@string/pref_mute_notifications_summary"></CheckBoxPreference>
 
-	
 
+
+		
+	
 </PreferenceCategory>
 
 
