@@ -65,7 +65,7 @@ public class SleepTimerRunner extends Thread {
 			}
 			
 			try {
-				sleep(1000*10); // sleep 1 minute
+				sleep(1000*60); // sleep 1 minute
 			} catch (InterruptedException e) {
 				// 
 			}

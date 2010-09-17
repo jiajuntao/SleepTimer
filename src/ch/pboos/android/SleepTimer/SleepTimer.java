@@ -43,7 +43,6 @@ public class SleepTimer extends Activity {
 	public static final String PREFS_OWN_SERVICE = "ownService";
 	public static final String PREFS_MINUTES = "minutes";
 	public static final String INTENT_EXTRA_STOP_MINUTES = "stopMinutes";
-	public static final int TIME_BETWEEN_INFO = 60; // TODO: set time again to 60
 	protected static final String PREFS_MUSIC_PLAYER = "pref_musicapp";
 	protected static final String PREFS_MUSIC_PLAYER_NAME = "pref_music_app_name";
 	private static final String PREFS_INFO_VERSION = "pref_info_version";
