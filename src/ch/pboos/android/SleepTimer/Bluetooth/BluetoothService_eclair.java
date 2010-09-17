@@ -4,6 +4,7 @@ package ch.pboos.android.SleepTimer.Bluetooth;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.os.Looper;
 
 public class BluetoothService_eclair extends BluetoothService {
 
@@ -11,7 +12,8 @@ public class BluetoothService_eclair extends BluetoothService {
         
         public BluetoothService_eclair() {
                 super();
-        btAdapter = BluetoothAdapter.getDefaultAdapter();     
+                Looper.prepare();
+                btAdapter = BluetoothAdapter.getDefaultAdapter();     
         }
         
         @Override
