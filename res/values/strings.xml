@@ -43,6 +43,7 @@
 	<string name="minutes_prompt">Set the minutes</string>
 	<string name="text_minutes">Minutes until your music slowly fades out. After fading your player will be stopped.</string>
 	<string name="menu_feedback">Bugs/Request</string>
+	<string name="notify_started">SleepTimer started...</string>
 	<string name="notify_minutes_left">minutes left</string>
 	<string name="notify_minutes_left_until_sleep">minutes left until Sleep.</string>
 	<string name="notify_going_to_sleep_in">Going to sleep in %s minutes.</string>

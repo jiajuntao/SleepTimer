@@ -43,6 +43,7 @@
 	<string name="minutes_prompt">Minuten setzen</string>
 	<string name="text_minutes">Minuten bis die Musik langsam verstummt. Danach wird der Player abgeschalten.</string>
 	<string name="menu_feedback">Fehler/Anfrage</string>
+	<string name="notify_started">SleepTimer gestartet...</string>
 	<string name="notify_minutes_left">Minuten übrig</string>
 	<string name="notify_minutes_left_until_sleep">Minuten übrig bis zum Abschalten.</string>
 	<string name="notify_going_to_sleep_in">Wird in %s Minuten schlafen gelegt.</string>

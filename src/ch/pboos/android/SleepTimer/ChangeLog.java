@@ -23,6 +23,9 @@ public class ChangeLog extends Activity {
 		String strChange = "" +
 		"<h1>ChangeLog</h1>" +
 		"<h2>0.10.1</h2>" +
+		"- Fix: Service dying when running for long time (needs testing)<br/>" +
+		
+		"<h2>0.10.1</h2>" +
 		"- Background service improved<br/>" +
 		"- 0 minutes allowed (for testing if player will be correctly shut down)<br/>" +
 		"- Fix: other player started (see settings pause/stop broadcast)<br/>" +
