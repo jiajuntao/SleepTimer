@@ -22,6 +22,15 @@ public class ChangeLog extends Activity {
 		changelog = (TextView)findViewById(R.id.textview_changelog);
 		String strChange = "" +
 		"<h1>ChangeLog</h1>" +
+		"<h2>0.10.1</h2>" +
+		"- Background service improved<br/>" +
+		"- Added Settings: Send pause/stop media broadcast<br/>" +
+		"- Added player: Zimly Media Player (thx to Tony T.)<br/>" +
+		"- Added player: Androrb (thx to Simon O.)<br/>" +
+		"- Added player: Player Pro (thx to John E.)<br/>" +
+		"- Added player: Arc media (thx to Anthony L.)<br/>" +
+		"- Added player: Energy Radio (thx to Benjamin L.)<br/>" +
+		
 		"<h2>0.9.16</h2>" +
 		"- Added player: RockPlayer (thx to Bryan B.)<br/>" +
 		"- Added player: r2player (thx to Jae K.)<br/>" +

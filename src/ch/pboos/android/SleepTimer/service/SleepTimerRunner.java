@@ -415,6 +415,13 @@ public class SleepTimerRunner extends Thread {
 		restartMusicApps.add("com.mixzing.basic"); // MixZing
 		restartMusicApps.add("com.r2"); // r2player
 		restartMusicApps.add("com.bamnetworks.mobile.android.gameday"); // mlb at bat 2010
+		restartMusicApps.add("nc.zimme"); // Zimly Media Player
+		restartMusicApps.add("com.development.androrb"); // Androrb - Orb on your Mobile
+		restartMusicApps.add("com.techfort.audiobooks"); // Audiobooks http://www.androlib.com/android.application.com-techfort-audiobooks-jBpAw.aspx
+		restartMusicApps.add("com.tbig.playerpro"); //Player Pro
+		restartMusicApps.add("sns.arcMedia.playerInterface.arm6"); // Arc media
+		restartMusicApps.add("radioenergy.app"); // App radio energy zürich
+		restartMusicApps.add("daapps.media.publicradio"); // Public Radio Live Stream
 		
 		return restartMusicApps;
 	}
