@@ -90,9 +90,11 @@ public class SleepTimerRunner extends Thread {
 		additionalStopSettings();
 		killDeadServices();
 		
+		sleepAndIgnoreInterrupt(1000);
 		if(audioManager.isMusicActive())
 			sendStopBroadcast();
 		
+		sleepAndIgnoreInterrupt(5000);
 		setVolumeBack(oldMusicVolumeLevel);
 		
 		_service.stopSleepTimer();
@@ -151,7 +153,7 @@ public class SleepTimerRunner extends Thread {
 	private void sleepAndIgnoreInterrupt(long time) {
 		// give the apps some time to save their state before killing.
 		try {
-			Thread.sleep(time);
+			sleep(time);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -215,7 +217,7 @@ public class SleepTimerRunner extends Thread {
 		for (int i = vol - 1; i >= 0; i--) {
 			manager.setStreamVolume(AudioManager.STREAM_MUSIC, i, 0);
 			try {
-				Thread.sleep(700);
+				sleep(700);
 			} catch (InterruptedException e) {
 			}
 		}
