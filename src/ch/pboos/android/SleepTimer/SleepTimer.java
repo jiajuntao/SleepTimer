@@ -6,6 +6,7 @@ import java.util.List;
 import ch.pboos.android.SleepTimer.service.SleepTimerService;
 import ch.pboos.android.SleepTimer.service.SleepTimerServiceBinder;
 
+import com.admob.android.ads.AdView;
 import com.nullwire.trace.ExceptionHandler;
 
 import android.app.Activity;
@@ -37,6 +38,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class SleepTimer extends Activity {
@@ -78,12 +80,14 @@ public class SleepTimer extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-//        SOMABanner.setPubID("923826534");
-//        SOMABanner.setAdID("65731726");
-        
         ExceptionHandler.register(this, "http://pboos.ch/bugs/server.php");
         
         setContentView(R.layout.main);
+        
+        if(isAppPayed()){
+        	AdView ads = (AdView)findViewById(R.id.ad);
+        	ads.setVisibility(View.GONE);
+        }
                 
         buttonStartStop = (Button)findViewById(R.id.ButtonStart);
         buttonStartPlayer = (Button)findViewById(R.id.Button_StartPlayer);
@@ -184,8 +188,6 @@ public class SleepTimer extends Activity {
 	        	alert.show();
         	}
         }
-        
-        connectToService();
     }
 
 	private void connectToService() {
@@ -194,14 +196,16 @@ public class SleepTimer extends Activity {
 		startService(intent);
 		bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
 	}
+	
     
 	@Override
-	protected void onDestroy() {
-		super.onDestroy();
+	protected void onStop() {
+		super.onStop();
 		if (sleepTimerService != null) {
 			sleepTimerService.unregisterCallback(sleepTimerCallback);
+			unbindService(serviceConnection);
+			sleepTimerService = null;
 		}
-		unbindService(serviceConnection);
 	}
 
 	private int getAppVersionCode() {
@@ -228,6 +232,18 @@ public class SleepTimer extends Activity {
 	    return true;
 	}
 	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		if(isAppPayed())
+			menu.findItem(R.id.menu_unlock).setVisible(false);
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+	private boolean isAppPayed() {
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(SleepTimer.this);
+        return settings.getBoolean(getString(R.string.attr_ispayed), false);
+	}
+
 	/* Handles item selections */
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
@@ -274,6 +290,10 @@ public class SleepTimer extends Activity {
 			});
 	    	dialog.show();
 	        return true;
+	    case R.id.menu_unlock:
+	    	Intent unlockIntent = new Intent(this, UnlockActivity.class);
+	    	startActivity(unlockIntent);
+	    	return true;
 	    case R.id.menu_donate:
 	    	Intent viewIntent = new Intent("android.intent.action.VIEW", Uri.parse("https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=BAZUNJ8H2QN64&lc=CH&item_name=SleepTimer&item_number=sleeptimer&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted"));  
 	    	startActivity(viewIntent);
@@ -322,6 +342,9 @@ public class SleepTimer extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		
+        connectToService();
+		
 		Button startPlayerButton = (Button)findViewById(R.id.Button_StartPlayer);
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(SleepTimer.this);
         String musicPlayerName = settings.getString(PREFS_MUSIC_PLAYER_NAME, "");
@@ -329,6 +352,13 @@ public class SleepTimer extends Activity {
         	musicPlayerName = "???";
         String buttonText = String.format(getResources().getString(R.string.button_start_player), musicPlayerName);
 		startPlayerButton.setText(buttonText);
+		
+        if(isAppPayed()){
+        	AdView ads = (AdView)findViewById(R.id.ad);
+        	ads.setVisibility(View.GONE);
+        	ImageView title = (ImageView)findViewById(R.id.image_title);
+        	title.setImageResource(R.drawable.title_payed);
+        }
 	}
 	
 	private void setStartStopButtonText(int sleepTimerState){

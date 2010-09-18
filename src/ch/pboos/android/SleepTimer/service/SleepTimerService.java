@@ -19,7 +19,9 @@ import android.os.IBinder;
 import android.util.Log;
 
 public class SleepTimerService extends Service {
+	@SuppressWarnings("unchecked")
 	private static final Class[] mStartForegroundSignature = new Class[] { int.class, Notification.class};
+	@SuppressWarnings("unchecked")
 	private static final Class[] mStopForegroundSignature = new Class[] { boolean.class};
 	private NotificationManager mNM;
 	private Method mStartForeground;

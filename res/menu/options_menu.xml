@@ -1,8 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/menu_changelog" android:title="@string/menu_changelog" android:icon="@android:drawable/ic_menu_info_details"/>
-    <item android:id="@+id/menu_feedback" android:title="@string/menu_feedback" android:icon="@android:drawable/ic_menu_send"></item><item android:id="@+id/menu_settings" android:title="@string/menu_settings" android:icon="@android:drawable/ic_menu_preferences"></item><item android:id="@+id/menu_donate" android:title="@string/menu_donate" android:icon="@drawable/btn_donate_sm">
+    <item android:id="@+id/menu_feedback" android:title="@string/menu_feedback" android:icon="@android:drawable/ic_menu_send"></item><item android:id="@+id/menu_settings" android:title="@string/menu_settings" android:icon="@android:drawable/ic_menu_preferences"></item><item android:id="@+id/menu_unlock" android:icon="@android:drawable/ic_lock_lock" android:title="@string/menu_unlock"></item><item android:id="@+id/menu_donate" android:title="@string/menu_donate" android:icon="@drawable/btn_donate_sm" android:visible="false">
 </item>
 <item android:id="@+id/menu_quit" android:title="@string/menu_quit" android:icon="@android:drawable/ic_menu_close_clear_cancel"></item>
+
 
 
 </menu>

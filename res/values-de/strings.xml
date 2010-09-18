@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="menu_unlock">Freischalten</string>
     <string name="pref_broadcast_stop_title">Sende Stop Broadcast</string>
     <string name="pref_broadcast_stop_off">Ein Stop-Media-Broadcast wird NICHT gesendet.</string>
     <string name="pref_broadcast_stop_on">Ein Stop-Media-Broadcast wird gesendet.</string>
@@ -66,4 +67,20 @@
 	<string name="message_froyo_root">Dein Handy ist gerootet (sieht zumindest aus). Alle Musik Programme können gestoppt werden. Nach dieser Nachricht kommt die Anfrage für Root-Zugriff. Diese bitte mit "always grant access" bestätigen, damit SleepTimer die Programme ohne deine/Ihre Interaktion beenden kann. Falls dein/Ihr Handy doch kein root-Zugriff hat, dann können nur wenige Programme gestoppt werden.</string>
 	<string name="message_froyo_noroot">Deine Handy ist nicht gerootet. Einige Music Programme, die den Media Pause Knopf unterstützen, werden gestoppt. Alle anderen können nicht gestoppt werden. Falls Google mir wieder erlauben wird Proramme zu "stoppen/töten", dann wird es wieder möglich sein. Aber momentan ist es unmöglich.</string>
 	<string name="message_froyo_toast_noroot">Your Android phone has no root.</string>
+
+	<string name="text_notyetpayed">SleepTimer ist noch nicht komplett freigeschalten. Du hast für dieses Program noch nichts bezahlt. Wenn du das gerne tun würdest um Features freizuschalten, tue eines von den folgenden Punkten.</string>
+	<string name="text_getpayedapp">Kaufe "SleepTimer Payed" um freizuschalten</string>
+	
+	<string name="text_getpayedapp_step1">1. Kaufe "SleepTimer Payed" inm the Android Market</string>
+	<string name="text_getpayedapp_step2">2. Starte SleepTimer (diese Applikation hier)</string>
+	<string name="text_getpayedapp_step3">3. Klicke auf &quot;Freischalten&quot; im Menu</string><string name="text_paypaypal">Pay through SleepTimer PayPal app</string>
+	<string name="text_paypaypal_step1">1. Lade &quot;SleepTimer PayPal&quot; from Android Market herunter</string>
+	<string name="text_paypaypal_step2">2. Starte &quot;SleepTimer PayPal&quot;, welches du gerade installiert hast</string>
+	<string name="text_paypaypal_step3">3. Bezahle durch PayPal</string>
+	<string name="text_paypaypal_step4">4. Starte SleepTimer (diese Applikation hier)</string>
+	<string name="text_paypaypal_step5">5. Klicke auf &quot;Freischalten&quot; im Menu</string>
+	<string name="text_donate">Spenden</string>
+	<string name="text_donate_step1">1. Spende 1$ oder mehr durch PayPal</string>
+	<string name="text_donate_step2">2. Warte auf eine E-Mail von mir</string>
+	<string name="text_donate_step3">3. Mache das, was im E-Mail beschrieben wird</string>
 </resources>

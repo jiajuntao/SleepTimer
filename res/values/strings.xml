@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="menu_unlock">Unlock</string>
     <string name="pref_broadcast_stop_title">Send Stop Broadcast</string>
     <string name="pref_broadcast_stop_off">A media stop broadcast will NOT be sent.</string>
     <string name="pref_broadcast_stop_on">A media stop broadcast will be sent.</string>
@@ -67,4 +68,20 @@
 	<string name="message_froyo_noroot">Your phone has no root access. Some applications supporting the Media Pause Button will be stopped. Others will not. If Google will allow me to kill other Applications again in future Versions, this will be possible again. But for now it is impossible.</string>
 	<string name="message_froyo_toast_noroot">Your Android phone has no root.</string>
 	
+
+	<string name="text_notyetpayed">You have not yet payed for the app. If you would like to do so, you need to do one of the following.</string>
+	<string name="text_getpayedapp">Buy SleepTimer Payed to unlock</string>
+	
+	<string name="text_getpayedapp_step1">1. Buy SleepTimer Payed in the Android Market</string>
+	<string name="text_getpayedapp_step2">2. Run SleepTimer (this app here)</string>
+	<string name="text_getpayedapp_step3">3. Click &quot;Unlock&quot; in the menu</string><string name="text_paypaypal">Pay through SleepTimer PayPal app</string>
+	<string name="text_paypaypal_step1">1. Download &quot;SleepTimer PayPal&quot; from Android Market</string>
+	<string name="text_paypaypal_step2">2. Run &quot;SleepTimer PayPal&quot; that you just installed</string>
+	<string name="text_paypaypal_step3">3. Pay through paypal</string>
+	<string name="text_paypaypal_step4">4. Run SleepTimer (this app here)</string>
+	<string name="text_paypaypal_step5">5. Click on &quot;Unlock&quot; in the menu</string>
+	<string name="text_donate">Donate</string>
+	<string name="text_donate_step1">1. Donate 1$ or more</string>
+	<string name="text_donate_step2">2. Wait for email from me</string>
+	<string name="text_donate_step3">3. Do as instructed in the email</string>
 </resources>

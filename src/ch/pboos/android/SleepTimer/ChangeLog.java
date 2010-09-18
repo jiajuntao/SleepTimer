@@ -22,7 +22,10 @@ public class ChangeLog extends Activity {
 		changelog = (TextView)findViewById(R.id.textview_changelog);
 		String strChange = "" +
 		"<h1>ChangeLog</h1>" +
-		"<h2>0.10.1</h2>" +
+		"<h2>0.10.2</h2>" +
+		"- Added: Unlock (pay)<br/>" +
+		"-- No advertisements<br/>" +
+		"-- More things in future (widget!)<br/>" +
 		"- Fix: Service dying when running for long time (needs testing)<br/>" +
 		
 		"<h2>0.10.1</h2>" +
