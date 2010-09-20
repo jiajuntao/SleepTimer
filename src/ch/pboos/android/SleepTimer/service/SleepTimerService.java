@@ -87,6 +87,8 @@ public class SleepTimerService extends Service {
 	}
 
 	public void stopSleepTimer() {
+		if(_thread == null)
+			return;
 		_thread.stopRunner();
 		_thread = null;
 		setState(SleepTimerService.STATE_STOPPED);
