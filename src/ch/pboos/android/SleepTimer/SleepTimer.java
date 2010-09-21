@@ -84,7 +84,7 @@ public class SleepTimer extends Activity {
         
         setContentView(R.layout.main);
         
-        if(isAppPayed()){
+        if(UnlockTools.isAppPayed(this)){
         	AdView ads = (AdView)findViewById(R.id.ad);
         	ads.setVisibility(View.GONE);
         }
@@ -234,14 +234,9 @@ public class SleepTimer extends Activity {
 	
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		if(isAppPayed())
+		if(UnlockTools.isAppPayed(this))
 			menu.findItem(R.id.menu_unlock).setVisible(false);
 		return super.onPrepareOptionsMenu(menu);
-	}
-
-	private boolean isAppPayed() {
-		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(SleepTimer.this);
-        return settings.getBoolean(getString(R.string.attr_ispayed), false);
 	}
 
 	/* Handles item selections */
@@ -353,7 +348,7 @@ public class SleepTimer extends Activity {
         String buttonText = String.format(getResources().getString(R.string.button_start_player), musicPlayerName);
 		startPlayerButton.setText(buttonText);
 		
-        if(isAppPayed()){
+        if(UnlockTools.isAppPayed(this)){
         	AdView ads = (AdView)findViewById(R.id.ad);
         	ads.setVisibility(View.GONE);
         	ImageView title = (ImageView)findViewById(R.id.image_title);

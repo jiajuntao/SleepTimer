@@ -1,15 +1,9 @@
 package ch.pboos.android.SleepTimer;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -24,17 +18,19 @@ public class UnlockActivity extends Activity {
 
 		setContentView(R.layout.unlock);
 		
-		if(isAppPayed()){
-			setAppToPayed();
+		if(UnlockTools.isAppPayed(this)){
+			UnlockTools.setAppToPayed(this);
+			finish();
 			return;
 		}
 		
-		if (isPackageAvailable("ch.pboos.android.SleepTimerPayed")) {
-			setAppToPayed();
+		if (UnlockTools.isPackageAvailable(this, "ch.pboos.android.SleepTimerPayed")) {
+			UnlockTools.setAppToPayed(this);
+			finish();
 			return;
 		}
 
-		if (isPackageAvailable("ch.pboos.android.SleepTimerPayPal")) {
+		if (UnlockTools.isPackageAvailable(this, "ch.pboos.android.SleepTimerPayPal")) {
 			Intent intent = new Intent(
 					"ch.pboos.android.SleepTimerPayPal.CHECK");
 			startActivityForResult(intent, CHECK_PAYMENT);
@@ -74,44 +70,20 @@ public class UnlockActivity extends Activity {
 		startActivity(it);
 	}
 
-	protected void setAppToPayed() {
-		SharedPreferences settings = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		SharedPreferences.Editor editor = settings.edit();
-		editor.putBoolean(getString(R.string.attr_ispayed), true);
-		editor.commit();
-		finish();
-	}
-
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-	}
-
-	public boolean isPackageAvailable(String action) {
-		final PackageManager packageManager = getPackageManager();
-		Intent intent = packageManager.getLaunchIntentForPackage(action);
-
-		if (intent == null)
-			return false;
-
-		List<ResolveInfo> list = packageManager.queryIntentActivities(intent,
-				PackageManager.MATCH_DEFAULT_ONLY);
-		return list.size() > 0;
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (resultCode) {
 		case RESULT_OK:
-			setAppToPayed();
+			UnlockTools.setAppToPayed(this);
+			finish();
+			break;
 		default:
 			break;
 		}
-	}
-
-	private boolean isAppPayed() {
-		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-        return settings.getBoolean(getString(R.string.attr_ispayed), false);
 	}
 }
