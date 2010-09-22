@@ -8,15 +8,20 @@ import java.util.List;
 
 import ch.pboos.android.SleepTimer.R;
 import ch.pboos.android.SleepTimer.SleepTimer;
+import ch.pboos.android.SleepTimer.SleepTimerWidgetProvider;
 
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.RemoteViews;
 
 public class SleepTimerService extends Service {
 	@SuppressWarnings("unchecked")
@@ -37,6 +42,13 @@ public class SleepTimerService extends Service {
 	public static final int STATE_RUNNING = 0;
 	public static final int STATE_STOPPED = 1;
 	public static final int STATE_SHUTTING_DOWN = 2;
+	
+	public static final String EXTRA_ACTION = "SLEEPTIMER_ACTION";
+	public static final String EXTRA_MINUTES = "SLEEPTIMER_MINUTES";
+	
+	public static final int ACTION_STARTSTOP = 0;
+	public static final int ACTION_UPDATE = 1;
+	
 	private int _currentState;
 	
 	@Override
@@ -56,10 +68,63 @@ public class SleepTimerService extends Service {
 	    }
 	}
 
+	// This is the old onStart method that will be called on the pre-2.0
+	// platform.  On 2.0 or later we override onStartCommand() so this
+	// method will not be called.
 	@Override
 	public void onStart(Intent intent, int startId) {
-		super.onStart(intent, startId);
+	    handleCommand(intent);
+	}
+
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+	    handleCommand(intent);
+	    // We want this service to continue running until it is explicitly
+	    // stopped, so return sticky.
+	    return START_STICKY;
+	}
+
+	private void handleCommand(Intent intent) {
 		Log.i("SleepTimerService", "Started");
+		if(intent.getExtras()!=null && intent.getExtras().containsKey(EXTRA_ACTION)) {
+			int action = intent.getExtras().getInt(EXTRA_ACTION);
+			switch (action) {
+			case ACTION_STARTSTOP:
+				if(isSleepTimerRunning()){
+					stopSleepTimer();
+				} else {
+					startSleepTimer(intent.getExtras().getInt(EXTRA_MINUTES,5));
+				}
+				break;
+			case ACTION_UPDATE:
+				updateWidgets();
+				break;
+			}
+		}
+	}
+
+	private void updateWidgets() {
+		RemoteViews remoteView = new RemoteViews(getApplicationContext().getPackageName(), R.layout.widget);
+		int minutesInPreferences = getMinutesFromPreferences();
+		if(isSleepTimerRunning()) {
+			remoteView.setImageViewResource(R.id.Button_StartStop, android.R.drawable.ic_delete);
+			remoteView.setTextViewText(R.id.text_minutes, Integer.toString(_thread.getMinutesRemaining()));
+		} else {
+			remoteView.setImageViewResource(R.id.Button_StartStop, android.R.drawable.ic_media_play);
+			remoteView.setTextViewText(R.id.text_minutes, Integer.toString(minutesInPreferences));
+		}
+		Intent intent = new Intent(this,SleepTimerService.class);
+		intent.putExtra(EXTRA_ACTION, ACTION_STARTSTOP);
+		intent.putExtra(EXTRA_MINUTES, minutesInPreferences);
+		remoteView.setOnClickPendingIntent(R.id.Button_StartStop, PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT));
+		
+		ComponentName thisWidget = new ComponentName(this, SleepTimerWidgetProvider.class);
+        AppWidgetManager manager = AppWidgetManager.getInstance(this);
+        manager.updateAppWidget(thisWidget, remoteView);
+	}
+
+	private int getMinutesFromPreferences() {
+		return PreferenceManager.getDefaultSharedPreferences(this).getInt(SleepTimer.PREFS_MINUTES, 5);
 	}
 
 	@Override
@@ -149,6 +214,7 @@ public class SleepTimerService extends Service {
 		for (ISleepTimerCallback callback : _callbacks) {
 			callback.stateUpdated(_currentState, minutes);
 		}
+		updateWidgets();
 	}
 	
 	private void showGoingToSleepNotification() {

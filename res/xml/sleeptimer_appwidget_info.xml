@@ -3,5 +3,5 @@
     android:minWidth="146dp"
     android:minHeight="72dp"
     android:updatePeriodMillis="86400000"
-    android:initialLayout="@layout/sleeptimer_appwidget">
+    android:initialLayout="@layout/widget">
 </appwidget-provider>

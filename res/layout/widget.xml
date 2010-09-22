@@ -6,5 +6,5 @@
 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/text_minutes" android:text="128" android:layout_marginRight="10px"></TextView>
 
 
-<ImageView android:id="@+id/ImageView01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:drawable/ic_media_play"></ImageView>
+<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/Button_StartStop"></ImageView>
 </LinearLayout>
