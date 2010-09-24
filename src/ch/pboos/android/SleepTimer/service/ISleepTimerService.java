@@ -6,4 +6,5 @@ public interface ISleepTimerService {
 	boolean isRunning();
 	void registerCallback(ISleepTimerCallback callback);
 	void unregisterCallback(ISleepTimerCallback callback);
+	void updateWidgets();
 }

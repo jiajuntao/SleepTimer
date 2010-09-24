@@ -36,4 +36,9 @@ public class SleepTimerServiceBinder extends Binder implements
 	public void unregisterCallback(ISleepTimerCallback callback) {
 		_service.unregisterCallback(callback);
 	}
+
+	@Override
+	public void updateWidgets() {
+		_service.updateWidgets();
+	}
 }
