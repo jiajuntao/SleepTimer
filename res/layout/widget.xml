@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content" android:orientation="horizontal" android:background="@drawable/widget_back_portrait">
-<RelativeLayout android:id="@+id/RelativeLayout01" android:layout_height="100px" android:layout_width="80px"><ImageView android:id="@+id/ImageView01" android:layout_above="@+id/RelativeLayout01" android:background="@drawable/title" android:layout_height="20px" android:layout_marginTop="20px" android:layout_width="60px" android:layout_centerHorizontal="true"></ImageView><LinearLayout android:id="@+id/LinearLayout01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerHorizontal="true" android:layout_centerVertical="true" android:orientation="vertical"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/text_minutes" android:textSize="15px" android:textStyle="bold" android:textColor="#000000" android:layout_gravity="center_horizontal|center" android:text="288 min" android:layout_marginTop="20px"></TextView><ImageView android:id="@+id/Button_StartStop" android:layout_gravity="center_horizontal|center" android:layout_height="20px" android:layout_width="20px"></ImageView></LinearLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="horizontal" android:background="@drawable/widget_back_portrait" android:layout_height="72dp" android:layout_width="72dp">
+	<RelativeLayout android:id="@+id/RelativeLayout01"
+		android:layout_height="72dp" android:layout_width="72dp">
+		<ImageView android:id="@+id/ImageView01"
+			android:layout_above="@+id/RelativeLayout01" android:background="@drawable/title"
+			android:layout_height="20dp" android:layout_width="60dp" android:layout_centerHorizontal="true" android:layout_marginTop="7dp"></ImageView>
+		<LinearLayout android:id="@+id/LinearLayout01"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:orientation="vertical" android:layout_centerHorizontal="true" android:layout_alignParentBottom="true" android:layout_marginBottom="10dp">
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/text_minutes"
+				android:textColor="#000000"
+				android:layout_gravity="center_horizontal|center" android:text="288 min" android:textSize="12dp" android:textStyle="bold"></TextView>
+			<ImageView android:id="@+id/Button_StartStop"
+				android:layout_gravity="center_horizontal|center"
+				android:layout_height="20dp" android:layout_width="20dp"></ImageView>
+		</LinearLayout>
 
-</RelativeLayout>
+	</RelativeLayout>
 
 
 
