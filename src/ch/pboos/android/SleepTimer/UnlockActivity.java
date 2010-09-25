@@ -24,7 +24,7 @@ public class UnlockActivity extends Activity {
 			return;
 		}
 		
-		if (UnlockTools.isPackageAvailable(this, "ch.pboos.android.SleepTimerPayed")) {
+		if(UnlockTools.isPaidPackageInstalled(this)){
 			UnlockTools.setAppToPayed(this);
 			finish();
 			return;

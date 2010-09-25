@@ -80,6 +80,9 @@ public class SleepTimer extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
+        if(UnlockTools.isPaidPackageInstalled(this))
+			UnlockTools.setAppToPayed(this);
+        
         ExceptionHandler.register(this, "http://pboos.ch/bugs/server.php");
         
         setContentView(R.layout.main);
