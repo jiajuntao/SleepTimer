@@ -25,4 +25,16 @@ public class UnlockTools {
         int sigMatch = context.getPackageManager().checkSignatures(context.getPackageName(), packageName); 
         return sigMatch == PackageManager.SIGNATURE_MATCH; 
 	}
+	
+
+	public static boolean isPaidPackageInstalled(Context context) {
+		if (isPackageAvailable(context, "ch.pboos.android.SleepTimerPayed")) {
+			return true;
+		}
+		if (isPackageAvailable(context, "ch.pboos.android.SleepTimerPaid")) {
+			return true;
+		}
+		
+		return false;
+	}
 }

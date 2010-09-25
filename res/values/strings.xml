@@ -69,12 +69,12 @@
 	<string name="message_froyo_toast_noroot">Your Android phone has no root.</string>
 	
 
-	<string name="text_notyetpayed">You have not yet payed for the app. If you would like to do so, you need to do one of the following.</string>
-	<string name="text_getpayedapp">Buy SleepTimer Payed to unlock</string>
+	<string name="text_notyetpaid">You have not yet paid for the app. If you would like to do so, you need to do one of the following.</string>
+	<string name="text_getpaidapp">Buy SleepTimer Paid to unlock</string>
 	
-	<string name="text_getpayedapp_step1">1. Buy SleepTimer Payed in the Android Market</string>
-	<string name="text_getpayedapp_step2">2. Run SleepTimer (this app here)</string>
-	<string name="text_getpayedapp_step3">3. Click &quot;Unlock&quot; in the menu</string><string name="text_paypaypal">Pay through SleepTimer PayPal app</string>
+	<string name="text_getpaidapp_step1">1. Buy SleepTimer Paid in the Android Market</string>
+	<string name="text_getpaidapp_step2">2. Run SleepTimer (this app here)</string>
+	<string name="text_getpaidapp_step3">3. Click &quot;Unlock&quot; in the menu</string><string name="text_paypaypal">Pay through SleepTimer PayPal app</string>
 	<string name="text_paypaypal_step1">1. Download &quot;SleepTimer PayPal&quot; from Android Market</string>
 	<string name="text_paypaypal_step2">2. Run &quot;SleepTimer PayPal&quot; that you just installed</string>
 	<string name="text_paypaypal_step3">3. Pay through paypal</string>

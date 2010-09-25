@@ -16,38 +16,86 @@
 					android:background="@drawable/title" android:layout_gravity="center_horizontal|center"></ImageView>
 				<TextView android:id="@+id/TextView01"
 					android:layout_width="wrap_content" android:layout_height="wrap_content"
-					android:layout_gravity="center_horizontal|center" android:text="@string/text_notyetpayed"
+					android:layout_gravity="center_horizontal|center" android:text="@string/text_notyetpaid"
 					android:layout_marginTop="10px" android:layout_marginBottom="25px"></TextView>
 
-<LinearLayout android:id="@+id/LinearLayout01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_horizontal|center" android:orientation="vertical">
+				<LinearLayout android:id="@+id/LinearLayout01"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:layout_gravity="center_horizontal|center"
+					android:orientation="vertical">
 
-<!-- 
-<TextView android:id="@+id/TextView03" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/text_getpayedapp" android:textStyle="bold" android:textSize="14px"></TextView><TextView android:id="@+id/TextView02" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/text_getpayedapp_step1"></TextView>
-<ImageView android:background="@drawable/android_market_icon" android:layout_width="48px" android:layout_height="48px" android:layout_marginLeft="15px" android:id="@+id/image_payedapp"></ImageView><TextView android:id="@+id/TextView04" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/text_getpayedapp_step2"></TextView>
-<TextView android:id="@+id/TextView05" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/text_getpayedapp_step3"></TextView>
- -->
+					<!--
+						<TextView android:id="@+id/TextView03"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/text_getpaidapp" android:textStyle="bold"
+						android:textSize="14px"></TextView><TextView
+						android:id="@+id/TextView02" android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/text_getpaidapp_step1"></TextView>
+						<ImageView android:background="@drawable/android_market_icon"
+						android:layout_width="48px" android:layout_height="48px"
+						android:layout_marginLeft="15px"
+						android:id="@+id/image_paidapp"></ImageView><TextView
+						android:id="@+id/TextView04" android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/text_getpaidapp_step2"></TextView>
+						<TextView android:id="@+id/TextView05"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/text_getpaidapp_step3"></TextView>
+					-->
 
-<!-- 
-<TextView android:id="@+id/TextView06" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/text_paypaypal" android:textStyle="bold" android:textSize="14px" android:layout_marginTop="15px"></TextView>
-<TextView android:id="@+id/TextView07" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/text_paypaypal_step1"></TextView>
-<ImageView android:background="@drawable/android_market_icon" android:layout_height="48px" android:layout_width="48px" android:layout_marginLeft="15px" android:id="@+id/image_paypalapp"></ImageView>
-<TextView android:id="@+id/TextView08" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/text_paypaypal_step2"></TextView>
-<TextView android:id="@+id/TextView09" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/text_paypaypal_step3"></TextView>
-<TextView android:id="@+id/TextView10" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/text_paypaypal_step4"></TextView>
-<TextView android:id="@+id/TextView11" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/text_paypaypal_step5"></TextView>
- -->
+					<!--
+						<TextView android:id="@+id/TextView06"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/text_paypaypal" android:textStyle="bold"
+						android:textSize="14px"
+						android:layout_marginTop="15px"></TextView> <TextView
+						android:id="@+id/TextView07" android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/text_paypaypal_step1"></TextView> <ImageView
+						android:background="@drawable/android_market_icon"
+						android:layout_height="48px" android:layout_width="48px"
+						android:layout_marginLeft="15px"
+						android:id="@+id/image_paypalapp"></ImageView> <TextView
+						android:id="@+id/TextView08" android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/text_paypaypal_step2"></TextView> <TextView
+						android:id="@+id/TextView09" android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/text_paypaypal_step3"></TextView> <TextView
+						android:id="@+id/TextView10" android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/text_paypaypal_step4"></TextView> <TextView
+						android:id="@+id/TextView11" android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/text_paypaypal_step5"></TextView>
+					-->
 
-<TextView android:id="@+id/TextView12" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/text_donate" android:textStyle="bold" android:textSize="14px" android:layout_marginTop="15px"></TextView>
-<TextView android:id="@+id/TextView13" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/text_donate_step1"></TextView>
-<ImageView android:background="@drawable/btn_donate_sm" android:layout_marginLeft="15px" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/image_donate"></ImageView>
-<TextView android:id="@+id/TextView14" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/text_donate_step2"></TextView>
-<TextView android:id="@+id/TextView15" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/text_donate_step3"></TextView>
+					<TextView android:id="@+id/TextView12"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:text="@string/text_donate" android:textStyle="bold"
+						android:textSize="14px" android:layout_marginTop="15px"></TextView>
+					<TextView android:id="@+id/TextView13"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:text="@string/text_donate_step1"></TextView>
+					<ImageView android:background="@drawable/btn_donate_sm"
+						android:layout_marginLeft="15px" android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:id="@+id/image_donate"></ImageView>
+					<TextView android:id="@+id/TextView14"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:text="@string/text_donate_step2"></TextView>
+					<TextView android:id="@+id/TextView15"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:text="@string/text_donate_step3"></TextView>
 
 
 
-</LinearLayout>
+				</LinearLayout>
 
-</LinearLayout>
+			</LinearLayout>
 		</RelativeLayout>
 	</ScrollView>
 </LinearLayout>

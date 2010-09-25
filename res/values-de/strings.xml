@@ -68,12 +68,12 @@
 	<string name="message_froyo_noroot">Deine Handy ist nicht gerootet. Einige Music Programme, die den Media Pause Knopf unterstützen, werden gestoppt. Alle anderen können nicht gestoppt werden. Falls Google mir wieder erlauben wird Proramme zu "stoppen/töten", dann wird es wieder möglich sein. Aber momentan ist es unmöglich.</string>
 	<string name="message_froyo_toast_noroot">Your Android phone has no root.</string>
 
-	<string name="text_notyetpayed">SleepTimer ist noch nicht komplett freigeschalten. Du hast für dieses Program noch nichts bezahlt. Wenn du das gerne tun würdest um Features freizuschalten, tue eines von den folgenden Punkten.</string>
-	<string name="text_getpayedapp">Kaufe "SleepTimer Payed" um freizuschalten</string>
+	<string name="text_notyetpaid">SleepTimer ist noch nicht komplett freigeschalten. Du hast für dieses Program noch nichts bezahlt. Wenn du das gerne tun würdest um Features freizuschalten, tue eines von den folgenden Punkten.</string>
+	<string name="text_getpaidapp">Kaufe "SleepTimer Paid" um freizuschalten</string>
 	
-	<string name="text_getpayedapp_step1">1. Kaufe "SleepTimer Payed" inm the Android Market</string>
-	<string name="text_getpayedapp_step2">2. Starte SleepTimer (diese Applikation hier)</string>
-	<string name="text_getpayedapp_step3">3. Klicke auf &quot;Freischalten&quot; im Menu</string><string name="text_paypaypal">Pay through SleepTimer PayPal app</string>
+	<string name="text_getpaidapp_step1">1. Kaufe "SleepTimer Paid" inm the Android Market</string>
+	<string name="text_getpaidapp_step2">2. Starte SleepTimer (diese Applikation hier)</string>
+	<string name="text_getpaidapp_step3">3. Klicke auf &quot;Freischalten&quot; im Menu</string><string name="text_paypaypal">Pay through SleepTimer PayPal app</string>
 	<string name="text_paypaypal_step1">1. Lade &quot;SleepTimer PayPal&quot; from Android Market herunter</string>
 	<string name="text_paypaypal_step2">2. Starte &quot;SleepTimer PayPal&quot;, welches du gerade installiert hast</string>
 	<string name="text_paypaypal_step3">3. Bezahle durch PayPal</string>

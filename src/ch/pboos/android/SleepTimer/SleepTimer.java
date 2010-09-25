@@ -80,6 +80,9 @@ public class SleepTimer extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
+        if(UnlockTools.isPaidPackageInstalled(this))
+			UnlockTools.setAppToPayed(this);
+        
         ExceptionHandler.register(this, "http://pboos.ch/bugs/server.php");
         
         setContentView(R.layout.main);
@@ -353,7 +356,7 @@ public class SleepTimer extends Activity {
         	AdView ads = (AdView)findViewById(R.id.ad);
         	ads.setVisibility(View.GONE);
         	ImageView title = (ImageView)findViewById(R.id.image_title);
-        	title.setImageResource(R.drawable.title_payed);
+        	title.setImageResource(R.drawable.title_paid);
         }
 	}
 	
