@@ -36,14 +36,14 @@ public class UnlockActivity extends Activity {
 			startActivityForResult(intent, CHECK_PAYMENT);
 		}
 
-//		ImageView imgPayed = (ImageView) findViewById(R.id.image_payedapp);
-//		imgPayed.setOnClickListener(new OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				goToUri("market://details?id=ch.pboos.android.SleepTimerPayed");
-//			}
-//		});
+		ImageView imgPayed = (ImageView) findViewById(R.id.image_paidapp);
+		imgPayed.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				goToUri("market://details?id=ch.pboos.android.SleepTimerPaid");
+			}
+		});
 
 //		ImageView imgPayPal = (ImageView) findViewById(R.id.image_paypalapp);
 //		imgPayPal.setOnClickListener(new OnClickListener() {

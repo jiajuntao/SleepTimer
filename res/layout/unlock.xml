@@ -24,12 +24,11 @@
 					android:layout_gravity="center_horizontal|center"
 					android:orientation="vertical">
 
-					<!--
-						<TextView android:id="@+id/TextView03"
+					<TextView android:id="@+id/TextView03"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:text="@string/text_getpaidapp" android:textStyle="bold"
-						android:textSize="14px"></TextView><TextView
+						android:textSize="14px" android:layout_marginTop="15dp"></TextView><TextView
 						android:id="@+id/TextView02" android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:text="@string/text_getpaidapp_step1"></TextView>
@@ -40,11 +39,7 @@
 						android:id="@+id/TextView04" android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:text="@string/text_getpaidapp_step2"></TextView>
-						<TextView android:id="@+id/TextView05"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="@string/text_getpaidapp_step3"></TextView>
-					-->
+						
 
 					<!--
 						<TextView android:id="@+id/TextView06"
@@ -77,7 +72,7 @@
 					<TextView android:id="@+id/TextView12"
 						android:layout_width="wrap_content" android:layout_height="wrap_content"
 						android:text="@string/text_donate" android:textStyle="bold"
-						android:textSize="14px" android:layout_marginTop="15px"></TextView>
+						android:textSize="14px" android:layout_marginTop="15dp"></TextView>
 					<TextView android:id="@+id/TextView13"
 						android:layout_width="wrap_content" android:layout_height="wrap_content"
 						android:text="@string/text_donate_step1"></TextView>
