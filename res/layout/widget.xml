@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="horizontal" android:background="@drawable/widget_back_portrait" android:layout_height="72dp" android:layout_width="72dp">
+	android:orientation="horizontal" android:layout_height="72dp"
+	android:layout_width="72dp">
 	<RelativeLayout android:id="@+id/RelativeLayout01"
 		android:layout_height="72dp" android:layout_width="72dp">
-		<ImageView android:id="@+id/ImageView01"
-			android:layout_above="@+id/RelativeLayout01" android:background="@drawable/title"
-			android:layout_height="20dp" android:layout_width="60dp" android:layout_centerHorizontal="true" android:layout_marginTop="7dp"></ImageView>
-		<LinearLayout android:id="@+id/LinearLayout01"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:orientation="vertical" android:layout_centerHorizontal="true" android:layout_alignParentBottom="true" android:layout_marginBottom="10dp">
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:id="@+id/text_minutes"
-				android:textColor="#000000"
-				android:layout_gravity="center_horizontal|center" android:text="288 min" android:textSize="12dp" android:textStyle="bold"></TextView>
-			<ImageView android:id="@+id/Button_StartStop"
-				android:layout_gravity="center_horizontal|center"
-				android:layout_height="20dp" android:layout_width="20dp"></ImageView>
-		</LinearLayout>
 
-	</RelativeLayout>
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/text_minutes"
+			android:textStyle="bold" android:textColor="#ffffff"
+			android:textSize="13dp" android:gravity="center_horizontal|center"
+			android:lineSpacingMultiplier="0.7" android:text="10 min"
+			android:paddingBottom="3dp" android:layout_marginTop="42dp"
+			android:layout_marginLeft="38dp" android:background="@drawable/text_back"></TextView>
+		<ImageView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/ImageView01" android:background="@drawable/widget_back" android:layout_marginTop="8dp" android:layout_marginLeft="15dp"></ImageView><ImageView android:id="@+id/Button_StartStop"
+			android:layout_height="35dp" android:layout_marginTop="40dp" android:layout_width="35dp" android:layout_marginLeft="5dp"></ImageView>
+	
+</RelativeLayout>
 
 
 

@@ -1,6 +1,8 @@
 package ch.pboos.android.SleepTimer;
 
+import ch.pboos.android.SleepTimer.service.SleepTimerService;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
@@ -18,6 +20,10 @@ public class UnlockTools {
 		SharedPreferences.Editor editor = settings.edit();
 		editor.putBoolean(context.getString(R.string.attr_ispayed), true);
 		editor.commit();
+		
+		Intent intent = new Intent(context, SleepTimerService.class);
+		intent.putExtra(SleepTimerService.EXTRA_ACTION, SleepTimerService.ACTION_UPDATE);
+		context.startService(intent);
 	}
 
 

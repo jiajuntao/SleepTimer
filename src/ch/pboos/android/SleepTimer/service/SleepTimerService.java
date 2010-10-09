@@ -11,6 +11,8 @@ import com.nullwire.trace.ExceptionHandler;
 import ch.pboos.android.SleepTimer.R;
 import ch.pboos.android.SleepTimer.SleepTimer;
 import ch.pboos.android.SleepTimer.SleepTimerWidgetProvider;
+import ch.pboos.android.SleepTimer.UnlockActivity;
+import ch.pboos.android.SleepTimer.UnlockTools;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -23,7 +25,6 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 
 public class SleepTimerService extends Service {
@@ -108,6 +109,37 @@ public class SleepTimerService extends Service {
 	}
 
 	void updateWidgets() {
+		ComponentName thisWidget = new ComponentName(this, SleepTimerWidgetProvider.class);
+        AppWidgetManager manager = AppWidgetManager.getInstance(this);
+        RemoteViews remoteView;
+        
+        if(UnlockTools.isAppPayed(this)) {	
+			remoteView = getUnlockedRemoteView();
+		} else {
+			remoteView = getLockedRemoteView();
+		}
+        
+        manager.updateAppWidget(thisWidget, remoteView);
+	}
+
+	private RemoteViews getLockedRemoteView() {
+		RemoteViews remoteView = new RemoteViews(getApplicationContext().getPackageName(), R.layout.widget);
+		int minutesInPreferences = getMinutesFromPreferences();
+		if(isSleepTimerRunning()) {
+			remoteView.setImageViewResource(R.id.Button_StartStop, android.R.drawable.ic_delete);
+			remoteView.setTextViewText(R.id.text_minutes, String.format(getString(R.string.x_minutes), Integer.toString(_thread.getMinutesRemaining())));
+		} else {
+			remoteView.setImageViewResource(R.id.Button_StartStop, android.R.drawable.ic_media_play);
+			remoteView.setTextViewText(R.id.text_minutes, String.format(getString(R.string.x_minutes), Integer.toString(minutesInPreferences)));
+		}
+		
+		Intent intent = new Intent(this,UnlockActivity.class);
+		
+		remoteView.setOnClickPendingIntent(R.id.RelativeLayout01, PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT));
+		return remoteView;
+	}
+
+	private RemoteViews getUnlockedRemoteView() {
 		RemoteViews remoteView = new RemoteViews(getApplicationContext().getPackageName(), R.layout.widget);
 		int minutesInPreferences = getMinutesFromPreferences();
 		if(isSleepTimerRunning()) {
@@ -122,10 +154,7 @@ public class SleepTimerService extends Service {
 		intent.putExtra(EXTRA_MINUTES, minutesInPreferences);
 		
 		remoteView.setOnClickPendingIntent(R.id.RelativeLayout01, PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT));
-		
-		ComponentName thisWidget = new ComponentName(this, SleepTimerWidgetProvider.class);
-        AppWidgetManager manager = AppWidgetManager.getInstance(this);
-        manager.updateAppWidget(thisWidget, remoteView);
+		return remoteView;
 	}
 
 	private int getMinutesFromPreferences() {

@@ -70,6 +70,9 @@
 
 	<string name="text_notyetpaid">SleepTimer ist noch nicht komplett freigeschalten. Du hast für dieses Program noch nichts bezahlt. Wenn du das gerne tun würdest um Features freizuschalten, tue eines von den folgenden Punkten.</string>
 	<string name="text_getpaidapp">Kaufe "SleepTimer Paid" um freizuschalten</string>
+	<string name="text_paidfeatures">Vorzüge der freigeschaltenen Version:</string>
+	<string name="text_paidfeature1">- Keine Werbung</string>
+	<string name="text_paidfeature2">- Widget</string>
 	
 	<string name="text_getpaidapp_step1">1. Kaufe "SleepTimer Paid" inm the Android Market</string>
 	<string name="text_getpaidapp_step2">2. Starte SleepTimer (diese Applikation hier)</string>
@@ -81,6 +84,6 @@
 	<string name="text_paypaypal_step5">5. Klicke auf &quot;Freischalten&quot; im Menu</string>
 	<string name="text_donate">Spenden</string>
 	<string name="text_donate_step1">1. Spende 1$ oder mehr durch PayPal</string>
-	<string name="text_donate_step2">2. Warte auf eine E-Mail von mir</string>
+	<string name="text_donate_step2">2. Warte auf eine E-Mail von Patrick Boos</string>
 	<string name="text_donate_step3">3. Mache das, was im E-Mail beschrieben wird</string>
 </resources>

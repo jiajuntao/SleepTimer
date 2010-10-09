@@ -69,8 +69,11 @@
 	<string name="message_froyo_toast_noroot">Your Android phone has no root.</string>
 	
 
-	<string name="text_notyetpaid">You have not yet paid for the app. If you would like to do so, you need to do one of the following.</string>
+	<string name="text_notyetpaid">SleepTimer is not totally unlocked, because you have not yet paid for the app. If you would like to do so, you need to do one of the following.</string>
 	<string name="text_getpaidapp">Buy SleepTimer Paid to unlock</string>
+	<string name="text_paidfeatures">Features of unlocked Version</string>
+	<string name="text_paidfeature1">- no Ads</string>
+	<string name="text_paidfeature2">- Widget</string>
 	
 	<string name="text_getpaidapp_step1">1. Buy SleepTimer Paid in the Android Market</string>
 	<string name="text_getpaidapp_step2">2. Run SleepTimer (this app here)</string>
@@ -82,6 +85,6 @@
 	<string name="text_paypaypal_step5">5. Click on &quot;Unlock&quot; in the menu</string>
 	<string name="text_donate">Donate</string>
 	<string name="text_donate_step1">1. Donate 1$ or more</string>
-	<string name="text_donate_step2">2. Wait for email from me</string>
+	<string name="text_donate_step2">2. Wait for email from Patrick Boos</string>
 	<string name="text_donate_step3">3. Do as instructed in the email</string>
 </resources>
