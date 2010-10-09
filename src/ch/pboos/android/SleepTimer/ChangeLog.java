@@ -22,6 +22,10 @@ public class ChangeLog extends Activity {
 		changelog = (TextView)findViewById(R.id.textview_changelog);
 		String strChange = "" +
 		"<h1>ChangeLog</h1>" +
+		
+		"<h2>1.0 (finally going 1.0!)</h2>" +
+		"- Added: Widget (Unlocked version only)<br/>" +
+		
 		"<h2>0.10.3</h2>" +
 		"- Fix: Force close when stopping during shutdown<br/>" +
 		
