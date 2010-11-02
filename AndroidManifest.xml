@@ -21,6 +21,7 @@
 		<activity android:name="Preferences"></activity>
 		<!-- a14ad64f203e4f2 -->
 		<activity android:name="UnlockActivity"></activity>
+		<activity android:theme="@style/Theme.CustomDialog" android:name="SleepTimerWidgetActivity"></activity>
 		<meta-data android:value="a14b5487eec65c9" android:name="ADMOB_PUBLISHER_ID" />
 
 		<receiver android:name="SleepTimerWidgetProvider" >

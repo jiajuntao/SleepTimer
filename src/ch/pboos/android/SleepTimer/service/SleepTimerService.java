@@ -10,6 +10,7 @@ import com.nullwire.trace.ExceptionHandler;
 
 import ch.pboos.android.SleepTimer.R;
 import ch.pboos.android.SleepTimer.SleepTimer;
+import ch.pboos.android.SleepTimer.SleepTimerWidgetActivity;
 import ch.pboos.android.SleepTimer.SleepTimerWidgetProvider;
 import ch.pboos.android.SleepTimer.UnlockActivity;
 import ch.pboos.android.SleepTimer.UnlockTools;
@@ -142,18 +143,17 @@ public class SleepTimerService extends Service {
 	private RemoteViews getUnlockedRemoteView() {
 		RemoteViews remoteView = new RemoteViews(getApplicationContext().getPackageName(), R.layout.widget);
 		int minutesInPreferences = getMinutesFromPreferences();
+		Intent intent = new Intent(this,SleepTimerWidgetActivity.class);
 		if(isSleepTimerRunning()) {
 			remoteView.setImageViewResource(R.id.Button_StartStop, android.R.drawable.ic_delete);
 			remoteView.setTextViewText(R.id.text_minutes, String.format(getString(R.string.x_minutes), Integer.toString(_thread.getMinutesRemaining())));
+			intent.putExtra(SleepTimerWidgetActivity.EXTRA_IS_SLEEPTIMER_RUNNING, true);
 		} else {
 			remoteView.setImageViewResource(R.id.Button_StartStop, android.R.drawable.ic_media_play);
 			remoteView.setTextViewText(R.id.text_minutes, String.format(getString(R.string.x_minutes), Integer.toString(minutesInPreferences)));
+			intent.putExtra(SleepTimerWidgetActivity.EXTRA_IS_SLEEPTIMER_RUNNING, false);
 		}
-		Intent intent = new Intent(this,SleepTimerService.class);
-		intent.putExtra(EXTRA_ACTION, ACTION_STARTSTOP);
-		intent.putExtra(EXTRA_MINUTES, minutesInPreferences);
-		
-		remoteView.setOnClickPendingIntent(R.id.RelativeLayout01, PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT));
+		remoteView.setOnClickPendingIntent(R.id.RelativeLayout01, PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT));
 		return remoteView;
 	}
 
