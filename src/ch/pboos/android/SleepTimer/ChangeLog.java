@@ -23,6 +23,9 @@ public class ChangeLog extends Activity {
 		String strChange = "" +
 		"<h1>ChangeLog</h1>" +
 		
+		"<h2>1.0.1</h2>" +
+		"- Fix: Force close when setting minutes<br/>" +
+		
 		"<h2>1.0 (finally going 1.0!)</h2>" +
 		"- Added: Widget (Unlocked version only)<br/>" +
 		

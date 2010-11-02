@@ -310,7 +310,13 @@ public class SleepTimer extends Activity {
 	    	sleep_minutes = data.getIntExtra("minutes", sleep_minutes);
 	    	savePreferences(PREFS_MINUTES, sleep_minutes);
 	        setButtonMinutes(sleep_minutes);
-	        sleepTimerService.updateWidgets();
+	        if(sleepTimerService!=null){
+	        	sleepTimerService.updateWidgets();
+	        } else {
+	        	Intent intent = new Intent(this,SleepTimerService.class);
+	    		intent.putExtra(SleepTimerService.EXTRA_ACTION, SleepTimerService.ACTION_UPDATE);
+	        	startService(intent);
+	        }
     	}
 	}
 
