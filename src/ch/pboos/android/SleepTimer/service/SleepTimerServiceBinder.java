@@ -19,7 +19,7 @@ public class SleepTimerServiceBinder extends Binder implements
 
 	@Override
 	public void stop() {
-		_service.stopSleepTimer();
+		_service.stopSleepTimer(true);
 	}
 
 	@Override

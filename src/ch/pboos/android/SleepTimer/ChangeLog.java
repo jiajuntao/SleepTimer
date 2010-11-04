@@ -25,6 +25,10 @@ public class ChangeLog extends Activity {
 		
 		"<h2>1.0.1</h2>" +
 		"- Fix: Force close when setting minutes<br/>" +
+		"- Fix: Service and App closed at the end<br/>" +
+		"- Added: Start music player when clicking on widget (default on)<br/>" +
+		"- Added: Choose minutes when clicking on widget (default off)<br/>" +
+		"- Added: Setting to turn off killing apps<br/>" +
 		
 		"<h2>1.0 (finally going 1.0!)</h2>" +
 		"- Added: Widget (Unlocked version only)<br/>" +

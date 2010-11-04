@@ -42,6 +42,7 @@ public class SleepTimerService extends Service {
 	private SleepTimerServiceBinder _binder;
 	private List<ISleepTimerCallback> _callbacks = new ArrayList<ISleepTimerCallback>();
 	private SleepTimerRunner _thread;
+	private int lastStartId;
 	private static final int SLEEP_TIMER_NOTIFICATION_ID = 47319;
 	
 	public static final int STATE_RUNNING = 0;
@@ -79,25 +80,26 @@ public class SleepTimerService extends Service {
 	// method will not be called.
 	@Override
 	public void onStart(Intent intent, int startId) {
-	    handleCommand(intent);
+	    handleCommand(intent, startId);
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-	    handleCommand(intent);
+	    handleCommand(intent, startId);
 	    // We want this service to continue running until it is explicitly
 	    // stopped, so return sticky.
 	    return START_STICKY;
 	}
 
-	private void handleCommand(Intent intent) {
+	private void handleCommand(Intent intent, int startId) {
+		lastStartId = startId;
 		Log.i("SleepTimerService", "Started");
 		if(intent!=null && intent.getExtras()!=null && intent.getExtras().containsKey(EXTRA_ACTION)) {
 			int action = intent.getExtras().getInt(EXTRA_ACTION);
 			switch (action) {
 			case ACTION_STARTSTOP:
 				if(isSleepTimerRunning()){
-					stopSleepTimer();
+					stopSleepTimer(true);
 				} else {
 					startSleepTimer(intent.getExtras().getInt(EXTRA_MINUTES,5));
 				}
@@ -185,15 +187,16 @@ public class SleepTimerService extends Service {
 		}
 	}
 
-	public void stopSleepTimer() {
+	public void stopSleepTimer(boolean isManual) {
 		if(_thread == null)
 			return;
 		_thread.stopRunner();
 		_thread = null;
 		setState(SleepTimerService.STATE_STOPPED);
+		if(!isManual) {
+			stopSelf(lastStartId);
+		}
 	}
-	
-	
 
 	public boolean isSleepTimerRunning() {
 		return _thread!=null;

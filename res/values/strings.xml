@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="pref_doforceclose_title">Kill music app</string>
+    <string name="pref_doforceclose_off">The app will not be force closed.</string>
+    <string name="pref_doforceclose_on">The app will be forced to closed if possible.</string>
+    <string name="pref_widget_setminutes_off">Minutes dialog is NOT shown when clickin on widget.</string>
+    <string name="pref_widget_setminutes_on">Minutes dialog is shown when clickin on widget.</string>
+    <string name="pref_widget_setminutes">Set minutes everytime</string>
+    <string name="pref_widget_startplayer_off">Music player will NOT be started</string>
+    <string name="pref_widget_startplayer_on">Music player will be started</string>
+    <string name="pref_widget_startplayer">Start Music Player</string>
+    <string name="pref_category_widget">Widget</string>
     <string name="menu_unlock">Unlock</string>
     <string name="pref_broadcast_stop_title">Send Stop Broadcast</string>
     <string name="pref_broadcast_stop_off">A media stop broadcast will NOT be sent.</string>

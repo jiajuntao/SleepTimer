@@ -102,10 +102,8 @@ public class SleepTimerRunner extends Thread {
 		sleepAndIgnoreInterrupt(5000);
 		setVolumeBack(oldMusicVolumeLevel);
 		
-		_service.stopSleepTimer();
-		shutdownSleepTimer();
+		_service.stopSleepTimer(false);
 	}
-
 
 	private boolean shouldSendStopBroadcast() {
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(_service);
@@ -158,12 +156,6 @@ public class SleepTimerRunner extends Thread {
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(_service);
         return settings.getBoolean("shakeActivated", false);
 	}
-
-	private void shutdownSleepTimer() {
-		ActivityManager am = (ActivityManager)_service.getSystemService(Context.ACTIVITY_SERVICE);
-		am.restartPackage("ch.pboos.android.SleepTimer");
-	}
-
 
 	private void sleepAndIgnoreInterrupt(long time) {
 		// give the apps some time to save their state before killing.
@@ -310,7 +302,8 @@ public class SleepTimerRunner extends Thread {
 	}
 
 	private void forceStopPackage(ActivityManager am, String pkgName) {
-
+		if (!shouldDoForceStop()) return;
+		
 		int sdkVersion = Integer.parseInt(Build.VERSION.SDK);
 		if (sdkVersion == 8 && RootUtils.hasRoot(_service, false)) {
 			try {
@@ -348,6 +341,11 @@ public class SleepTimerRunner extends Thread {
 		} else {
 			am.restartPackage(pkgName);
 		}
+	}
+
+	private boolean shouldDoForceStop() {
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(_service);
+        return settings.getBoolean(_service.getString(R.string.attr_doforceclose), true);
 	}
 
 	private boolean isAndroidPlayer(String serviceName) {

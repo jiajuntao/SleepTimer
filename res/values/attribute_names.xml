@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="attr_broadcast_stop">send_broadcast_stop</string>
-<string name="attr_broadcast_pause">broadcast_pause</string>
-<string name="attr_ispayed">ispayed</string>
-<string name="attr_widget_startplayer">widget_startplayer</string>
-<string name="attr_widget_setminutes">widget_setminutes</string>
+	<string name="attr_broadcast_stop">send_broadcast_stop</string>
+	<string name="attr_broadcast_pause">broadcast_pause</string>
+	<string name="attr_ispayed">ispayed</string>
+	<string name="attr_widget_startplayer">widget_startplayer</string>
+	<string name="attr_widget_setminutes">widget_setminutes</string>
+	<string name="attr_doforceclose">doforceclose</string>
 </resources>

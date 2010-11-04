@@ -205,6 +205,10 @@ public class SleepTimer extends Activity {
 	protected void onStop() {
 		super.onStop();
 		if (sleepTimerService != null) {
+			if(!sleepTimerService.isRunning()) {
+				Intent intent = new Intent(this, SleepTimerService.class);
+				stopService(intent);
+			}
 			sleepTimerService.unregisterCallback(sleepTimerCallback);
 			unbindService(serviceConnection);
 			sleepTimerService = null;
@@ -379,6 +383,9 @@ public class SleepTimer extends Activity {
 
 	public void updateSleepTimerState(int state, int minutes) {
 		setStartStopButtonText(state);
+		if (state == SleepTimerService.STATE_SHUTTING_DOWN) {
+			finish();
+		}
 	}
 	
 	

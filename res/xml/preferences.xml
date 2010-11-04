@@ -18,7 +18,7 @@
 			android:title="@string/pref_shakeextend_minutes" android:key="shakeMinutes"></EditTextPreference>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_category_after_countdown">
-		<CheckBoxPreference android:summaryOn="@string/pref_broadcast_pause_on" android:summaryOff="@string/pref_broadcast_pause_off" android:key="@string/attr_broadcast_pause" android:title="@string/pref_broadcast_pause_title" android:defaultValue="true"></CheckBoxPreference><CheckBoxPreference android:summaryOn="@string/pref_broadcast_stop_on" android:summaryOff="@string/pref_broadcast_stop_off" android:key="@string/attr_broadcast_stop" android:title="@string/pref_broadcast_stop_title" android:defaultValue="false"></CheckBoxPreference><CheckBoxPreference android:title="@string/pref_stop_wifi"
+		<CheckBoxPreference android:summaryOn="@string/pref_broadcast_pause_on" android:summaryOff="@string/pref_broadcast_pause_off" android:key="@string/attr_broadcast_pause" android:title="@string/pref_broadcast_pause_title" android:defaultValue="true"></CheckBoxPreference><CheckBoxPreference android:summaryOn="@string/pref_broadcast_stop_on" android:summaryOff="@string/pref_broadcast_stop_off" android:key="@string/attr_broadcast_stop" android:title="@string/pref_broadcast_stop_title" android:defaultValue="false"></CheckBoxPreference><CheckBoxPreference android:summaryOff="@string/pref_doforceclose_off" android:defaultValue="true" android:summaryOn="@string/pref_doforceclose_on" android:key="@string/attr_doforceclose" android:title="@string/pref_doforceclose_title"></CheckBoxPreference><CheckBoxPreference android:title="@string/pref_stop_wifi"
 			android:key="pref_stop_wifi" android:summary="@string/pref_stop_wifi_summary"></CheckBoxPreference>
 		<CheckBoxPreference android:key="pref_stop_bluetooth"
 			android:title="@string/pref_bluetooth" android:summary="@string/pref_bluetooth_summary"></CheckBoxPreference>
@@ -31,7 +31,11 @@
 
 		
 	
+
 </PreferenceCategory>
 
 
+<PreferenceCategory android:title="@string/pref_category_widget"><CheckBoxPreference android:key="@string/attr_widget_startplayer" android:defaultValue="true" android:summaryOff="@string/pref_widget_startplayer_off" android:summaryOn="@string/pref_widget_startplayer_on" android:title="@string/pref_widget_startplayer"></CheckBoxPreference>
+<CheckBoxPreference android:key="@string/attr_widget_setminutes" android:title="@string/pref_widget_setminutes" android:summaryOff="@string/pref_widget_setminutes_off" android:summaryOn="@string/pref_widget_setminutes_on"></CheckBoxPreference>
+</PreferenceCategory>
 </PreferenceScreen>
