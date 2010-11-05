@@ -23,7 +23,12 @@ public class ChangeLog extends Activity {
 		String strChange = "" +
 		"<h1>ChangeLog</h1>" +
 		
-		"<h2>1.0.1</h2>" +
+		"<h2>1.1.1</h2>" +
+		"- Fix: Widget not starting SleepTimer<br/>" +
+		"- Fix: Widget not starting when setting minutes<br/>" +
+		"- Fix: Widget only does set_minutes OR playerstart (both together fails)<br/>" +
+		
+		"<h2>1.1</h2>" +
 		"- Fix: Force close when setting minutes<br/>" +
 		"- Fix: Service and App closed at the end<br/>" +
 		"- Added: Start music player when clicking on widget (default on)<br/>" +

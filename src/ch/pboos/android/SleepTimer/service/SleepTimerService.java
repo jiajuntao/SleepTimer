@@ -54,6 +54,7 @@ public class SleepTimerService extends Service {
 	
 	public static final int ACTION_STARTSTOP = 0;
 	public static final int ACTION_UPDATE = 1;
+	public static final int ACTION_STOP_SERVICE = 2;
 	
 	private int _currentState;
 	
@@ -99,10 +100,13 @@ public class SleepTimerService extends Service {
 			switch (action) {
 			case ACTION_STARTSTOP:
 				if(isSleepTimerRunning()){
-					stopSleepTimer(true);
+					stopSleepTimer(false);
 				} else {
 					startSleepTimer(intent.getExtras().getInt(EXTRA_MINUTES,5));
 				}
+				break;
+			case ACTION_STOP_SERVICE:
+				stopSleepTimer(true);
 				break;
 			case ACTION_UPDATE:
 				updateWidgets();
@@ -187,13 +191,13 @@ public class SleepTimerService extends Service {
 		}
 	}
 
-	public void stopSleepTimer(boolean isManual) {
+	public void stopSleepTimer(boolean doStopService) {
 		if(_thread == null)
 			return;
 		_thread.stopRunner();
 		_thread = null;
 		setState(SleepTimerService.STATE_STOPPED);
-		if(!isManual) {
+		if(doStopService) {
 			stopSelf(lastStartId);
 		}
 	}

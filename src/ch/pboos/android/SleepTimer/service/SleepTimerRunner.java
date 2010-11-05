@@ -102,7 +102,7 @@ public class SleepTimerRunner extends Thread {
 		sleepAndIgnoreInterrupt(5000);
 		setVolumeBack(oldMusicVolumeLevel);
 		
-		_service.stopSleepTimer(false);
+		_service.stopSleepTimer(true);
 	}
 
 	private boolean shouldSendStopBroadcast() {

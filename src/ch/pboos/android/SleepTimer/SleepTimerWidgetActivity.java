@@ -22,28 +22,35 @@ public class SleepTimerWidgetActivity extends Activity {
 		
 		if(isRunning) {
 			stopSleepTimer();
-		} else if (shouldSetMinutes()){
+			finish();
+		} else  if (shouldSetMinutes()){
 			Intent i = new Intent(this, SetTimeDialog.class);
 			i.putExtra("minutes", getCurrentMinutes());
 			startActivityForResult(i, REQUEST_MINUTES);
-		} else if (shouldStartMusicPlayer()) {
-			startMusicPlayer();
+		} else {
+			if (shouldStartMusicPlayer()) {
+				startMusicPlayer();
+			}
 			startSleepTimer(getCurrentMinutes());
+			finish();
 		}
-		finish();
 	}
 
 	private void stopSleepTimer() {
-		// Can call start function because that runs startstop on sleeptimer service
-		startSleepTimer(getCurrentMinutes());
-		
+		Intent intent = new Intent(this, SleepTimerService.class);
+		intent.putExtra(SleepTimerService.EXTRA_ACTION, SleepTimerService.ACTION_STOP_SERVICE);
+		startService(intent);
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(data!=null && data.hasExtra("minutes")){
+			if (shouldStartMusicPlayer()) {
+				startMusicPlayer();
+			}
 	    	int sleep_minutes = data.getIntExtra("minutes", getCurrentMinutes());
         	startSleepTimer(sleep_minutes);
+        	finish();
     	}
 	}
 
