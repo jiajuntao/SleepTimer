@@ -18,6 +18,7 @@ import org.apache.http.message.BasicNameValuePair;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.util.Log;
 
 public class BugSender {
@@ -29,6 +30,14 @@ public class BugSender {
 		try {
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 			// Your DATA
+			nameValuePairs.add(new BasicNameValuePair("manufacturer", Build.MANUFACTURER));
+			nameValuePairs.add(new BasicNameValuePair("model", Build.MODEL));
+			nameValuePairs.add(new BasicNameValuePair("device", Build.DEVICE));
+			nameValuePairs.add(new BasicNameValuePair("product", Build.PRODUCT));
+			nameValuePairs.add(new BasicNameValuePair("build", Build.FINGERPRINT));
+			nameValuePairs.add(new BasicNameValuePair("android_version_release", Build.VERSION.RELEASE));
+			nameValuePairs.add(new BasicNameValuePair("android_version_sdk_int", Integer.toString(Build.VERSION.SDK_INT)));
+
 			nameValuePairs.add(new BasicNameValuePair("package_version", getSoftwareVersion(context)));
 			nameValuePairs.add(new BasicNameValuePair("package_name", getSoftwareName(context)));
 			String stacktrace = name + "\n\n"+text + "\n\n"+getCurrentStackTrace();
