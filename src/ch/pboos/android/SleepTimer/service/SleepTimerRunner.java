@@ -30,8 +30,6 @@ import ch.pboos.android.SleepTimer.R;
 import ch.pboos.android.SleepTimer.RootUtils;
 import ch.pboos.android.SleepTimer.SleepTimer;
 import ch.pboos.android.SleepTimer.Bluetooth.BluetoothService;
-import ch.pboos.android.SleepTimer.StopConnections.AndroidMediaPlayerStopperServiceConnection;
-import ch.pboos.android.SleepTimer.StopConnections.HtcMediaPlayerStopperServiceConnection;
 
 public class SleepTimerRunner extends Thread {
 	private SleepTimerService _service;
@@ -239,13 +237,7 @@ public class SleepTimerRunner extends Thread {
 		for (int i = 0; i < rs.size(); i++) {
 			ActivityManager.RunningServiceInfo rsi = rs.get(i);
 
-			String serviceName = rsi.service.getClassName();
 			String processName = rsi.process;
-
-			if (isHtcPlayer(serviceName))
-				stopHtcPlayer();
-			if (isAndroidPlayer(serviceName))
-				stopAndroidPlayer();
 
 			if (restartMusicServices.contains(processName)) {
 				int index;
@@ -346,32 +338,6 @@ public class SleepTimerRunner extends Thread {
 	private boolean shouldDoForceStop() {
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(_service);
         return settings.getBoolean(_service.getString(R.string.attr_doforceclose), true);
-	}
-
-	private boolean isAndroidPlayer(String serviceName) {
-		return serviceName.equals("com.android.music.MediaPlaybackService");
-	}
-
-	private boolean isHtcPlayer(String serviceName) {
-		return serviceName.equals("com.htc.music.MediaPlaybackService");
-	}
-
-	private void stopAndroidPlayer() {
-		Intent intent = new Intent();
-		intent.setClassName("com.android.music",
-				"com.android.music.MediaPlaybackService");
-		AndroidMediaPlayerStopperServiceConnection conn = new AndroidMediaPlayerStopperServiceConnection();
-		_service.bindService(intent, conn, 0);
-		_service.unbindService(conn);
-	}
-
-	private void stopHtcPlayer() {
-		Intent intent = new Intent();
-		intent.setClassName("com.htc.music",
-				"com.htc.music.MediaPlaybackService");
-		HtcMediaPlayerStopperServiceConnection conn = new HtcMediaPlayerStopperServiceConnection();
-		_service.bindService(intent, conn, 0);
-		_service.unbindService(conn);
 	}
 
 	private List<String> getFixSetApps() {
