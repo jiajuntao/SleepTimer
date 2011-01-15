@@ -212,18 +212,17 @@ public class SleepTimerService extends Service {
 	}
 
 	public void unregisterCallback(ISleepTimerCallback callback) {
-		_callbacks.remove(callback);
+		synchronized (_callbacks) {
+			_callbacks.remove(callback);
+		}
 	}
 
 	public void registerCallback(ISleepTimerCallback callback) {
-		_callbacks.add(callback);
-		
+		synchronized (_callbacks) {
+			_callbacks.add(callback);
+		}
 		int minutesRemaining = isSleepTimerRunning() ? _thread.getMinutesRemaining() : 0 ;
 		callback.stateUpdated(_currentState, minutesRemaining);
-	}
-
-	public List<ISleepTimerCallback> getCallbacks() {
-		return _callbacks;
 	}
 	
 	void setMinutes() {
@@ -257,8 +256,10 @@ public class SleepTimerService extends Service {
 	}
 
 	private void informAboutStateChange(int minutes) {
-		for (ISleepTimerCallback callback : _callbacks) {
-			callback.stateUpdated(_currentState, minutes);
+		synchronized (_callbacks) {
+			for (ISleepTimerCallback callback : _callbacks) {
+				callback.stateUpdated(_currentState, minutes);
+			}
 		}
 		updateWidgets();
 	}
