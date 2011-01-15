@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.nullwire.trace.ExceptionHandler;
 
+import ch.pboos.android.SleepTimer.BugSender;
 import ch.pboos.android.SleepTimer.R;
 import ch.pboos.android.SleepTimer.SleepTimer;
 import ch.pboos.android.SleepTimer.SleepTimerWidgetActivity;
@@ -126,7 +127,11 @@ public class SleepTimerService extends Service {
 			remoteView = getLockedRemoteView();
 		}
         
-        manager.updateAppWidget(thisWidget, remoteView);
+        try {
+        	manager.updateAppWidget(thisWidget, remoteView);
+        } catch (NullPointerException e) {
+        	BugSender.sendBug(this, "[caught] updateWidgets() - NullPointerException", "This exception is caugh, but this is to see, how often it happens.");
+        }
 	}
 
 	private RemoteViews getLockedRemoteView() {
