@@ -22,7 +22,7 @@
     <string name="pref_category_after_countdown">Nach dem countdown</string>
     <string name="button_start_player">Öffne %s</string>
     <string name="menu_settings">Einstellungen</string>
-    <string name="pref_ownservice_summary">Wähle eine anderes nicht unterstütztes Programm, welches gestoppt werden soll.</string>
+    <string name="pref_ownservice_summary">Wähle eine anderes nicht unterstütztes Programm, welches gestoppt werden soll. (Nur vor Froyo möglich oder gerootet)</string>
     <string name="pref_ownservice">Anderes Programm stoppen</string>
     <string name="pref_music_app_summary">Musik Applikation wählen, welche durch den Knopf gestartet werden soll.</string>
     <string name="pref_music_app">Setze "Öffne" Button</string>

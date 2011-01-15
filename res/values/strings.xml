@@ -32,7 +32,7 @@
     <string name="pref_category_after_countdown">After countdown</string>
     <string name="button_start_player">Launch %s</string>
     <string name="menu_settings">Settings</string>
-    <string name="pref_ownservice_summary">Choose another not supported application to be stopped by SleepTimer.</string>
+    <string name="pref_ownservice_summary">Choose another not supported application to be stopped by SleepTimer. (works only before Froyo or rooted)</string>
     <string name="pref_ownservice">Other application to stop</string>
     <string name="pref_music_app_summary">Choose your music application which should be started with the launch button.</string>
     <string name="pref_music_app">Set Launch Button</string>
