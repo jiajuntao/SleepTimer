@@ -22,6 +22,10 @@ public class ChangeLog extends Activity {
 		changelog = (TextView)findViewById(R.id.textview_changelog);
 		String strChange = "" +
 		"<h1>ChangeLog</h1>" +
+
+		"<h2>1.2</h2>" +
+		"- Fix: Fixed several exceptions<br/>" +
+		"- Fix: Removed connecting to service of Android Music Player because of Security Exception. But can still be stopped through Pause Broadcast.<br/>" +
 		
 		"<h2>1.1.1</h2>" +
 		"- Fix: Widget not starting SleepTimer<br/>" +
