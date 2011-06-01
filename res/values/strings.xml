@@ -41,10 +41,6 @@
     <string name="pref_music_player_not_set">Music player has not been set in preferences.</string>
     <string name="dialog_btn_set">Save</string>
     <string name="dialog_set_minutes">Set minutes</string>
-    <string name="dialog_feedback_send_button">Send feedback through e-mail</string>
-    <string name="dialog_feedback_include_services">Include list of running services</string>
-    <string name="dialog_feedback_title">Feedback</string>
-    <string name="dialog_feedback_player_name">Name of your player: </string>
     <string name="dialog_loadapps_standby">Loading applications. This might take a while...</string>
     <string name="dialog_loadservices_standby">Loading running services. This might take a while...</string>
     <string name="menu_quit">Quit</string>
@@ -64,8 +60,6 @@
 	<string name="layout_text">Doze off peacefully with SleepTimer.</string>
 	<string name="button_start_sleeptimer"> Start SleepTimer</string>
 	<string name="button_stop_sleeptimer">Stop SleepTimer</string>
-	<string name="dialog_feedback">When clicking on the button below it will open your e-mail application where you can enter the feedback/request/bug report.</string>
-	<string name="dialog_feedback2">If you want a new player to be supported please let your player run music and then send this feedback including the running services. Please mention the name of your player in the feedback.</string>
 	<string name="own_service_empty">[DO NOT SET]</string>
 	<string name="x_minutes">%s min</string>
 	<string name="pref_music_player">Music Player</string>

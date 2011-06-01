@@ -3,7 +3,8 @@
 	xmlns:admobsdk="http://schemas.android.com/apk/res/ch.pboos.android.SleepTimer"
 	android:id="@+id/LayoutTop" android:layout_height="fill_parent"
 	android:layout_width="fill_parent" android:orientation="vertical">
-	<ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1">
+	<ScrollView android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_weight="1">
 		<RelativeLayout android:orientation="vertical"
 			android:layout_width="fill_parent" android:layout_height="fill_parent"
 			android:layout_gravity="center_vertical">
@@ -47,16 +48,4 @@
 			</LinearLayout>
 		</RelativeLayout>
 	</ScrollView>
-	<!--
-	<com.smaato.SOMA.SOMABanner
-		android:id="@+id/BannerView"
-		android:layout_width="fill_parent"
-		android:layout_height="50dp"
-		android:scaleType="centerInside"/>
-	 -->
-	<com.admob.android.ads.AdView android:id="@+id/ad"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		admobsdk:backgroundColor="#000000" admobsdk:textColor="#FFFFFF"
-		/>
-
 </LinearLayout>
